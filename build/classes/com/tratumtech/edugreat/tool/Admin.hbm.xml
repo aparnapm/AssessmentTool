@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated Jul 3, 2018 4:20:33 PM by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="edugreat" dynamic-insert="false" dynamic-update="false" mutable="true" name="com.tratumtech.edugreat.tool.Admin" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="admin">
+        <id name="id" type="int">
+            <column name="id"/>
+            <generator class="increment"/>
+        </id>
+        <property generated="never" lazy="false" name="firstName" optimistic-lock="true" type="string" unique="false">
+            <column length="20" name="first_name" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="lastName" optimistic-lock="true" type="string" unique="false">
+            <column length="30" name="last_name" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="email" optimistic-lock="true" type="string" unique="false">
+            <column length="30" name="email" not-null="true" unique="true"/>
+        </property>
+        <property generated="never" lazy="false" name="phone" optimistic-lock="true" type="string" unique="false">
+            <column length="20" name="phone" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="passw" optimistic-lock="true" type="string" unique="false">
+            <column length="30" name="passw" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="location" optimistic-lock="true" type="string" unique="false">
+            <column length="20" name="location"/>
+        </property>
+        <property generated="never" lazy="false" name="dob" optimistic-lock="true" type="date" unique="false">
+            <column length="10" name="dob"/>
+        </property>
+    </class>
+</hibernate-mapping>

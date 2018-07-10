@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+		"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="hibernate.connection.password">root</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/edugreat</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+        <mapping resource="com/tratumtech/edugreat/tool/Admin.hbm.xml"/>
+        <mapping resource="com/tratumtech/edugreat/tool/Student.hbm.xml"/>
+        <mapping resource="com/tratumtech/edugreat/tool/Parent.hbm.xml"/>
+        <mapping resource="com/tratumtech/edugreat/tool/Questions.hbm.xml"/>
+         <mapping resource="com/tratumtech/edugreat/tool/Assessment.hbm.xml"/>
+            <mapping resource="com/tratumtech/edugreat/tool/Enrollment.hbm.xml"/>
+    </session-factory>
+</hibernate-configuration>

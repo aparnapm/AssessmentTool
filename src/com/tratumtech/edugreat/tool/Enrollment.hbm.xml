@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="edugreat" dynamic-insert="false" dynamic-update="false" mutable="true" name="com.tratumtech.edugreat.tool.Enrollment" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="enrollment">
+        <id name="id" type="int">
+            <column name="id"/>
+            <generator class="increment"/>
+        </id>
+        <property generated="never" lazy="false" name="assessmentId" optimistic-lock="true" type="int" unique="false">
+            <column name="assessment_id" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="studentId" optimistic-lock="true" type="int" unique="false">
+            <column name="student_id" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="validFrom" optimistic-lock="true" type="date" unique="false">
+            <column length="10" name="valid_from"/>
+        </property>
+        <property generated="never" lazy="false" name="validUntil" optimistic-lock="true" type="date" unique="false">
+            <column length="10" name="valid_until"/>
+        </property>
+        <property generated="never" lazy="false" name="stat" optimistic-lock="true" type="boolean" unique="false">
+            <column name="stat" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="attempts" optimistic-lock="true" type="integer" unique="false">
+            <column name="attempts" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="score" optimistic-lock="true" type="java.lang.Integer" unique="false">
+            <column name="score"/>
+        </property>
+    </class>
+</hibernate-mapping>

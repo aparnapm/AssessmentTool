@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="edugreat" dynamic-insert="false" dynamic-update="false" mutable="true" name="com.tratumtech.edugreat.tool.Questions" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="questions">
+        <id name="id" type="int">
+            <column name="id"/>
+            <generator class="increment"/>
+        </id>
+        <property generated="never" lazy="false" name="category" optimistic-lock="true" type="string" unique="false">
+            <column length="10" name="category"/>
+        </property>
+        <property generated="never" lazy="false" name="question" optimistic-lock="true" type="string" unique="false">
+            <column length="100" name="ques" not-null="true" unique="true"/>
+        </property>
+        <property generated="never" lazy="false" name="opta" optimistic-lock="true" type="string" unique="false">
+            <column length="50" name="opta" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="optb" optimistic-lock="true" type="string" unique="false">
+            <column length="50" name="optb" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="optc" optimistic-lock="true" type="string" unique="false">
+            <column length="50" name="optc"/>
+        </property>
+        <property generated="never" lazy="false" name="optd" optimistic-lock="true" type="string" unique="false">
+            <column length="50" name="optd"/>
+        </property>
+        <property generated="never" lazy="false" name="answer" optimistic-lock="true" type="char" unique="false">
+            <column length="1" name="answer" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="difficulty" optimistic-lock="true" type="string" unique="false">
+            <column length="10" name="difficulty"/>
+        </property>
+        <property generated="never" lazy="false" name="createdby" optimistic-lock="true" type="int" unique="false">
+            <column name="createdby"/>
+        </property>
+         <set name="assessmentset" table="quizbank" fetch="select" cascade="all">
+			<key column="question_id" />
+			<many-to-many class="com.tratumtech.edugreat.tool.Assessment" column="assessment_id" />
+		</set>
+    </class>
+</hibernate-mapping>
