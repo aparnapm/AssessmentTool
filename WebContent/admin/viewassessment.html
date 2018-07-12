@@ -1,0 +1,107 @@
+	<div id="viewassessment" >
+	
+		<h2>Edit assessment</h2>
+	<form data-ng-app="myApp" data-ng-controller="myController"  data-ng-submit="update(details)">
+     <ul class="form-style-1">
+			<li><label for="aid">Assessment id</label>
+			<input type="text" id="aid" data-ng-model="details.id" />
+			
+            </li>
+			<li><label for="name">Name</label>
+			<input type="text" id="name" data-ng-model="details.assessmentName"/>
+</li>
+			<li><label for="descr">Description</label>
+			<textarea id="descr" data-ng-model="details.description" rows="5"></textarea>
+		</li><li>
+			<label for="cat">Category</label>
+			<select id="cat" data-ng-model="details.category">
+			<option value="IQ">IQ</option>
+			<option value="EQ">EQ</option>
+			<option value="gen">gen</option>
+			</select>
+			</li>
+			<li>
+			<label for="attempts">Maximum attempts</label>
+			<input type="number" id="attempts" data-ng-model="details.attempts"/>
+			</li>
+			<li>
+			<label for="creator">Created By</label>
+			<input type="text" id="creator" data-ng-model="details.createdby" />
+</li><li>
+			<label for="diff">Difficulty</label>
+			<select id="diff" data-ng-model="details.difficulty">
+			<option value="hard">hard</option>
+			<option value="medium">medium</option>
+			<option value="easy">easy</option>
+			</select></li>
+	  <li>
+			<input type="submit" value="Save Changes"/></li>
+			</ul>
+		</form>
+	<!--  
+	<table>
+			<tr>
+				<th>ID</th>
+				<td>{{details.id}}
+				</td>
+				</tr>
+				
+			<tr>
+				<th>Assessment Name</th>
+				<td>{{details.assessmentName}}
+				</td>
+				</tr>
+				
+			<tr>
+				<th>Description</th>
+				<td>{{details.description}}
+				</td>
+				</tr>
+				
+			<tr>
+				<th>Category</th>
+				<td>{{details.category}}
+				</td>
+				</tr>
+				
+			<tr>
+				<th>No of questions</th>
+				<td>{{details.qcount}}
+				</td>
+				</tr>
+				
+			<tr>
+				<th>No of attempts</th>
+				<td>{{details.attempts}}
+				</td>
+				</tr>
+				
+			<tr>
+				<th>Created By</th>
+				<td>{{details.createdby}}
+				</td>
+				</tr>
+				
+					
+			<tr>
+				<th>Difficulty</th>
+				<td>{{details.difficulty}}
+				</td>
+				</tr>
+				
+					
+			<tr>
+				<th>Created Date</th>
+				<td>{{details.createdDate}}
+				</td>
+				</tr>
+				
+			
+		</table>
+
+		<div id="buttons" align="center">
+			<button onclick="openpage('editquiz',this)">Edit</button>
+		</div>
+	-->
+	</div>
+	

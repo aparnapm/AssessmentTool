@@ -1,0 +1,28 @@
+<div id="questions"  align="center"  data-ng-init="getQuestions()">
+	
+		<h2>Manage Questions</h2>
+		<table>
+			<tr>
+				<th>ID</th>
+				<th>Category</th>
+				<th>Question Type</th>
+				<th>Question</th>
+				<th>Answer Key</th>
+				<th>Created By</th>
+				<th>Manage</th>
+				</tr>
+					<tr data-ng-repeat="x in response">
+				<td>{{x.id}}</td>
+				<td>{{x.category}}</td>
+				
+				<td>{{x.difficulty}}</td>
+				<td>{{x.question}}</td>
+				<td>{{x.answer}}</td>
+				
+				<td>{{x.createdby}}</td>
+			<td><button onclick="#">View</button></td>
+				</tr>
+		</table>
+	
+		
+	</div>

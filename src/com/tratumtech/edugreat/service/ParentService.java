@@ -13,8 +13,9 @@ package com.tratumtech.edugreat.service;
 	import javax.ws.rs.Produces;
 	import javax.ws.rs.core.Context;
 	import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
-	import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.JsonGenerationException;
 	import org.codehaus.jackson.map.JsonMappingException;
 	import org.codehaus.jackson.map.ObjectMapper;
 	import org.codehaus.jackson.map.annotate.JsonSerialize;
@@ -56,7 +57,7 @@ package com.tratumtech.edugreat.service;
 		@GET
 		@Path("all")
 		@Produces(MediaType.APPLICATION_JSON)
-		public JSONArray getAllParent() {
+		public Response getAllParent() {
 			JSONArray joAllParent = new JSONArray();
 			HashSet<Parent> emptySet = null;
 			
@@ -83,7 +84,7 @@ package com.tratumtech.edugreat.service;
 				e.printStackTrace();
 			}
 			
-			return joAllParent;		
+			return Response.ok(joAllParent).header("Access-Control-Allow-Origin","*").build();		
 		}
 		
 		@GET

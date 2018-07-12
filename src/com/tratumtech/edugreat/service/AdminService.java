@@ -13,6 +13,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -61,7 +63,7 @@ public class AdminService {
 	@GET
 	@Path("all")
 	@Produces(MediaType.APPLICATION_JSON)
-	public JSONArray getAllAdmin() {
+	public Response getAllAdmin() {
 		JSONArray joAllAdmin = new JSONArray();
 		HashSet<Admin> emptySet = null;
 
@@ -88,7 +90,7 @@ public class AdminService {
 			e.printStackTrace();
 		}
 
-		return joAllAdmin;		
+		return Response.ok(joAllAdmin).header("Access-Control-Allow-Origin","*").build();		
 	}
 
 	// working
@@ -96,7 +98,7 @@ public class AdminService {
 	@GET
 	@Path("{id}")
 	@Produces(MediaType.APPLICATION_JSON)	
-	public JSONObject GetAdminById(@PathParam("id") int id){
+	public Response GetAdminById(@PathParam("id") int id){
 		Admin objAdmin = null;
 		JSONObject jo = new JSONObject();		
 		try{
@@ -121,7 +123,8 @@ public class AdminService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return jo;
+
+		return Response.ok(jo).header("Access-Control-Allow-Origin","*").build();
 	}
 
 	@POST

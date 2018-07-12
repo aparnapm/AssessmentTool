@@ -13,6 +13,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
@@ -42,7 +43,7 @@ public class StudentService {
 	@GET
 	@Path("all")
 	@Produces(MediaType.APPLICATION_JSON)
-	public JSONArray getAllStudent() {
+	public Response getAllStudent() {
 		JSONArray joAllStudent = new JSONArray();
 		HashSet<Student> emptySet = null;
 		
@@ -69,7 +70,7 @@ public class StudentService {
 			e.printStackTrace();
 		}
 		
-		return joAllStudent;		
+		return Response.ok(joAllStudent).header("Access-Control-Allow-Origin","*").build();		
 	}
 	
 	@GET

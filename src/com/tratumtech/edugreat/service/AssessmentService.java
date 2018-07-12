@@ -14,8 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 	import javax.ws.rs.Produces;
 	import javax.ws.rs.core.Context;
 	import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
-	import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.JsonGenerationException;
 	import org.codehaus.jackson.map.JsonMappingException;
 	import org.codehaus.jackson.map.ObjectMapper;
 	import org.codehaus.jackson.map.annotate.JsonSerialize;
@@ -58,7 +59,7 @@ import javax.servlet.http.HttpServletRequest;
 		@GET
 		@Path("all")
 		@Produces(MediaType.APPLICATION_JSON)
-		public JSONArray getAllAssessment() {
+		public Response getAllAssessment() {
 			JSONArray joAllAssessment = new JSONArray();
 			HashSet<Assessment> emptySet = null;
 			
@@ -85,13 +86,13 @@ import javax.servlet.http.HttpServletRequest;
 				e.printStackTrace();
 			}
 			
-			return joAllAssessment;		
+			return Response.ok(joAllAssessment).header("Access-Control-Allow-Origin","*").build();	
 		}
 		
 		@GET
 		@Path("{id}")
 		@Produces(MediaType.APPLICATION_JSON)	
-		public JSONObject GetAssessmentById(@PathParam("id") int id){
+		public Response GetAssessmentById(@PathParam("id") int id){
 			Assessment objAssessment = null;
 			JSONObject jo = new JSONObject();		
 			try{
@@ -116,13 +117,13 @@ import javax.servlet.http.HttpServletRequest;
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			return jo;
+			return Response.ok(jo).header("Access-Control-Allow-Origin","*").build();	
 		}
 
 		@POST
 		@Path("add")
 		@Produces(MediaType.APPLICATION_JSON)	
-		public JSONObject addAssessment(String data){
+		public Response addAssessment(String data){
 			
 			JSONObject jo = new JSONObject();
 			
@@ -135,23 +136,22 @@ import javax.servlet.http.HttpServletRequest;
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			return jo;
+			return Response.ok(jo).header("Access-Control-Allow-Origin","*").build();	
 		}
 
 		@PUT
 		@Path("update")
 		@Produces(MediaType.APPLICATION_JSON)	
-		public JSONObject updateAssessment(String data){
+		public Response updateAssessment(String data){
 			JSONObject jo = null;
 			try{
 				AssessmentHome objPH = new AssessmentHome();
 				jo = objPH.updateAssessment(data);
-				return jo;
 			}catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			return jo;
+			return Response.ok(jo).header("Access-Control-Allow-Origin","*").build();	
 		}
 
 		@DELETE

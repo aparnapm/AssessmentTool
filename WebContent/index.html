@@ -87,8 +87,9 @@
         <li><a href="#!about">ABOUT</a></li>
         <li><a href="#!login">LOGIN</a></li>
         <li><a href="#!register">REGISTER</a></li>
-        <li><a href="#!contact">CONTACT</a></li>
+        <li><a href="#!contact">CONTACT</a></li>     
       </ul>
+      <a href="admin/admin_home.html"><button>admin</button></a>
     </div>
 </nav>
 
@@ -104,16 +105,16 @@ var app = angular.module("myApp", ["ngRoute"]);
 app.config(function($routeProvider) {
     $routeProvider
     .when("/about", {
-        templateUrl : "WEB-INF/index/about.html"
+        templateUrl : "index/about.html"
     })
     .when("/login", {
-        templateUrl : "WEB-INF/index/login.html"
+        templateUrl : "index/login.html"
     })
     .when("/register", {
-        templateUrl : "WEB-INF/index/register.html"
+        templateUrl : "index/register.html"
     })
     .when("/contact", {
-        templateUrl :"WEB-INF/index/contact.html"
+        templateUrl :"index/contact.html"
     });
 });
 

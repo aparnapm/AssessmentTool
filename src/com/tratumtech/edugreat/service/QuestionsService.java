@@ -13,8 +13,9 @@ package com.tratumtech.edugreat.service;
 	import javax.ws.rs.Produces;
 	import javax.ws.rs.core.Context;
 	import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
-	import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.JsonGenerationException;
 	import org.codehaus.jackson.map.JsonMappingException;
 	import org.codehaus.jackson.map.ObjectMapper;
 	import org.codehaus.jackson.map.annotate.JsonSerialize;
@@ -56,7 +57,7 @@ package com.tratumtech.edugreat.service;
 		@GET
 		@Path("all")
 		@Produces(MediaType.APPLICATION_JSON)
-		public JSONArray getAllQuestions() {
+		public Response getAllQuestions() {
 			JSONArray joAllQuestions = new JSONArray();
 			HashSet<Questions> emptySet = null;
 			
@@ -83,13 +84,13 @@ package com.tratumtech.edugreat.service;
 				e.printStackTrace();
 			}
 			
-			return joAllQuestions;		
+			return Response.ok(joAllQuestions).header("Access-Control-Allow-Origin","*").build();	
 		}
 		
 		@GET
 		@Path("{id}")
 		@Produces(MediaType.APPLICATION_JSON)	
-		public JSONObject GetQuestionsById(@PathParam("id") int id){
+		public Response GetQuestionsById(@PathParam("id") int id){
 			Questions objQuestions = null;
 			JSONObject jo = new JSONObject();		
 			try{
@@ -114,7 +115,7 @@ package com.tratumtech.edugreat.service;
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			return jo;
+			return Response.ok(jo).header("Access-Control-Allow-Origin","*").build();
 		}
 
 		@POST

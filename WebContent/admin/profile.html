@@ -1,0 +1,61 @@
+
+	<div id="profile" class="tabcontent">
+		<div class="wrapper">
+			<div class="info">
+				<p>
+					First Name<br>
+					Last Name<br>
+					Email<br>
+					Mobile number<br>
+					Password<br>
+					Location<br>
+					Date of birth<br>
+				</p>
+			</div>
+			<div class="details">
+				<p>
+					Example<br>
+					Example<br>
+					Example<br>
+					Example<br>
+					Example<br>
+					Example<br>
+					Example<br>
+					
+				</p>
+			</div>
+		</div>
+			<button class="button" onclick="openpage('editit',this)">Edit</button>
+	</div>
+
+	<div id="editit" class="tabcontent" >
+		<br>
+		<h2>Edit your details</h2>
+		<form class="non-modal-content">
+			<label for="fname">First Name</label>
+			<input type="text" id="fname" name="firstname">
+
+			<label for="lname">Last Name</label>
+			<input type="text" id="lname" name="lastname">
+
+			<label for="email">Email</label>
+			<input type="email" id="email" name="email">
+			
+			<label for="pw">Password</label>
+			<input type="password" id="pw" name="pw">
+			<label for="Rpw">If you wish to change password, Enter new password!</label>
+			<input type="password" id="Rpw" name="Rpw">
+
+			<label for="mobnum">Mobile Number</label>
+			<input type="text" id="mobnum" name="mobile_number" maxlength="10">
+
+			<label for="location">Location</label>
+			<input type="text" id="location" name="location">
+
+			<label for="dob">Date of Birth</label>
+			<input type="date" id="dob" name="date_of_birth">	    
+
+			<input class="button" type="submit" value="Save Changes">
+			<button class="button" onclick="openpage('profile', this)">Go Back</button>
+		</form>
+	</div>
