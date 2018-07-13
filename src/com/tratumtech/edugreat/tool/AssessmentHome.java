@@ -130,26 +130,25 @@ public class AssessmentHome {
 		return joResult ;
 	}
 	
-	public JSONObject deleteAssessment(String assessmentData) {
+	public JSONObject deleteAssessment(int assessment_id) {
 		Transaction tx = null;
 		JSONObject result = new JSONObject();
-		
+		Set<Questions> emptyset= new HashSet<Questions>();
 		try {
 			result.put("id", -1);
 			result.put("message", "Error. Delete failed.");
-			JSONObject joAssessment = new JSONObject(assessmentData);
-			Assessment objAssessment = new Assessment(joAssessment);
 			
 			Session objSession = HibernateUtil.getSessionFactory().openSession();
 			tx = objSession.beginTransaction();
+			Assessment objAssessment =(Assessment)objSession.get(Assessment.class, assessment_id);
+			objAssessment.setQuestionset(emptyset);
 			objSession.delete(objAssessment);
 			result.put("id", "0");
 			result.put("message", "Deleted.");
 			
 			tx.commit();
 			objSession.close();
-			
-			result.put("id", joAssessment.get("id"));
+		
 			return result;
 		} catch (Exception e) {
 			e.printStackTrace();

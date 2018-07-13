@@ -120,26 +120,23 @@ public class EnrollmentHome {
 		return joResult ;
 	}
 	
-	public JSONObject deleteEnrollment(String enrollmentData){
+	public JSONObject deleteEnrollment(int enrollment_id){
 		Transaction tx = null ;
-		JSONObject joEnrollment = null;
 		
-		int enrollmentId = 0;
 		JSONObject joResult = new JSONObject();
-
+		  Enrollment objEnrollment = new Enrollment();
 		
 		try
 		{
-			joResult.put("message", "ERROR");
-			joEnrollment = new JSONObject(enrollmentData);
-		    Enrollment objEnrollment = new Enrollment(joEnrollment);
+			joResult.put("message", "ERROR");  
 			Session objSession = HibernateUtil.getSessionFactory().openSession();
+			objEnrollment =  (Enrollment) objSession.get(Enrollment.class, enrollment_id);
 			tx = objSession.beginTransaction();
-			enrollmentId = objEnrollment.getId();
+			
 			objSession.delete(objEnrollment);
 				
 			joResult.put("message", "SUCCESSFULLY DELETED");
-			joResult.put("enrollmentId", enrollmentId);
+			joResult.put("enrollmentId", enrollment_id);
 			tx.commit();
 			objSession.close();
 			return joResult;

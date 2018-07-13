@@ -1,33 +1,34 @@
 <div id="createAssessment">
-<form data-ng-app="myApp" data-ng-controller="myController"  data-ng-submit="createassessment(newdetails)">
+<form data-ng-app="myApp" data-ng-controller="assessmentCntrl"  data-ng-submit="assessment.create()">
      <ul class="form-style-1">
-			<li><label for="aid">Assessment id</label>
-			<input type="text" id="aid" data-ng-model="newdetails.id" />
 			
-            </li>
 			<li><label for="name">Name</label>
-			<input type="text" id="name" data-ng-model="newdetails.assessmentName"/>
+			<input type="text" id="name" data-ng-model="assessment.test.assessmentName"/>
 </li>
 			<li><label for="descr">Description</label>
-			<textarea id="descr" data-ng-model="newdetails.description" rows="5"></textarea>
+			<textarea id="descr" data-ng-model="assessment.test.description" rows="5"></textarea>
 		</li><li>
 			<label for="cat">Category</label>
-			<select id="cat" data-ng-model="newdetails.category">
+			<select id="cat" data-ng-model="assessment.test.category">
 			<option value="IQ">IQ</option>
 			<option value="EQ">EQ</option>
 			<option value="gen">gen</option>
 			</select>
 			</li>
 			<li>
+			<label for="qcount">No of questions</label>
+			<input type="number" id="qcount" data-ng-model="assessment.test.qcount"/>
+			</li>
+			<li>
 			<label for="attempts">Maximum attempts</label>
-			<input type="number" id="attempts" data-ng-model="newdetails.attempts"/>
+			<input type="number" id="attempts" data-ng-model="assessment.test.attempts"/>
 			</li>
 			<li>
 			<label for="creator">Created By</label>
-			<input type="text" id="creator" data-ng-model="newdetails.createdby" />
+			<input type="text" id="creator" data-ng-model="assessment.test.createdby" />
 </li><li>
 			<label for="diff">Difficulty</label>
-			<select id="diff" data-ng-model="newdetails.difficulty">
+			<select id="diff" data-ng-model="assessment.test.difficulty">
 			<option value="hard">hard</option>
 			<option value="medium">medium</option>
 			<option value="easy">easy</option>

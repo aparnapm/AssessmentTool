@@ -40,19 +40,6 @@ import org.codehaus.jackson.JsonGenerationException;
 			this.request = request;
 		}
 		
-		@GET
-		@Path("test")
-		@Produces(MediaType.APPLICATION_JSON)
-		public JSONObject testQuestions(String data) {
-			JSONObject item = new JSONObject();
-			try {
-				item = new JSONObject(data);
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return item;
-		}
 		
 		@GET
 		@Path("all")

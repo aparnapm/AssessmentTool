@@ -41,20 +41,6 @@ import org.codehaus.jackson.JsonGenerationException;
 		}
 		
 		@GET
-		@Path("test")
-		@Produces(MediaType.APPLICATION_JSON)
-		public JSONObject testParent(String data) {
-			JSONObject item = new JSONObject();
-			try {
-				item = new JSONObject(data);
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return item;
-		}
-		
-		@GET
 		@Path("all")
 		@Produces(MediaType.APPLICATION_JSON)
 		public Response getAllParent() {
@@ -90,7 +76,7 @@ import org.codehaus.jackson.JsonGenerationException;
 		@GET
 		@Path("{id}")
 		@Produces(MediaType.APPLICATION_JSON)	
-		public JSONObject GetParentById(@PathParam("id") int id){
+		public Response GetParentById(@PathParam("id") int id){
 			Parent objParent = null;
 			JSONObject jo = new JSONObject();		
 			try{
@@ -115,13 +101,13 @@ import org.codehaus.jackson.JsonGenerationException;
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			return jo;
+			return Response.ok(jo).header("Access-Control-Allow-Origin","*").build();	
 		}
 
 		@POST
 		@Path("add")
 		@Produces(MediaType.APPLICATION_JSON)	
-		public JSONObject addParent(String data){
+		public Response addParent(String data){
 			
 			JSONObject jo = new JSONObject();
 			
@@ -134,7 +120,7 @@ import org.codehaus.jackson.JsonGenerationException;
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			return jo;
+			return Response.ok(jo).header("Access-Control-Allow-Origin","*").build();	
 		}
 
 		@PUT

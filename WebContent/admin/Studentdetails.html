@@ -11,7 +11,8 @@
 				<th>Institution</th>
 				<th>Standard</th>
 				<th>Location</th>
-				<th>Manage</th>
+				<th>Delete</th>
+					<th>Edit</th>
 				</tr>
 				<tr data-ng-repeat="x in response">
 				<td>{{x.id}}</td>
@@ -24,7 +25,9 @@
 					<td>{{x.institution}}</td>
 						<td>{{x.standard}}</td>
 				<td>{{x.location}}</td>
-			<td><button onclick="#">View</button></td>
+			<td data-ng-controller="StudentCntrl"><button data-ng-click="deleteStudent(x.id)" >Delete</button></td>
+			<td data-ng-controller="StudentCntrl"><button data-ng-click="viewStudent(x.id)" >View</button></td>
+			
 				</tr>
 		</table>
 		

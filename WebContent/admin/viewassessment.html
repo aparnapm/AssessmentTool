@@ -1,20 +1,19 @@
-	<div id="viewassessment" >
-	
+ <div="editassessment"  >
 		<h2>Edit assessment</h2>
-	<form data-ng-app="myApp" data-ng-controller="myController"  data-ng-submit="update(details)">
+	<form data-ng-app="myApp" data-ng-controller="myController"  data-ng-submit="update(assessmentdetails)">
      <ul class="form-style-1">
 			<li><label for="aid">Assessment id</label>
-			<input type="text" id="aid" data-ng-model="details.id" />
+			<input type="text" id="aid" data-ng-model="assessmentdetails.id" />
 			
             </li>
 			<li><label for="name">Name</label>
-			<input type="text" id="name" data-ng-model="details.assessmentName"/>
+			<input type="text" id="name" data-ng-model="assessmentdetails.assessmentName"/>
 </li>
 			<li><label for="descr">Description</label>
-			<textarea id="descr" data-ng-model="details.description" rows="5"></textarea>
+			<textarea id="descr" data-ng-model="assessmentdetails.description" rows="5"></textarea>
 		</li><li>
 			<label for="cat">Category</label>
-			<select id="cat" data-ng-model="details.category">
+			<select id="cat" data-ng-model="assessmentdetails.category">
 			<option value="IQ">IQ</option>
 			<option value="EQ">EQ</option>
 			<option value="gen">gen</option>
@@ -22,14 +21,14 @@
 			</li>
 			<li>
 			<label for="attempts">Maximum attempts</label>
-			<input type="number" id="attempts" data-ng-model="details.attempts"/>
+			<input type="number" id="attempts" data-ng-model="assessmentdetails.attempts"/>
 			</li>
 			<li>
 			<label for="creator">Created By</label>
-			<input type="text" id="creator" data-ng-model="details.createdby" />
+			<input type="text" id="creator" data-ng-model="assessmentdetails.createdby" />
 </li><li>
 			<label for="diff">Difficulty</label>
-			<select id="diff" data-ng-model="details.difficulty">
+			<select id="diff" data-ng-model="assessmentdetails.difficulty">
 			<option value="hard">hard</option>
 			<option value="medium">medium</option>
 			<option value="easy">easy</option>
@@ -38,7 +37,33 @@
 			<input type="submit" value="Save Changes"/></li>
 			</ul>
 		</form>
-	<!--  
+<div data-ng-init="assessmentquestion(assessmentdetails.id)">
+<h2>Questions</h2>
+		<table >
+			<tr>
+				<th>ID</th>
+				<th>Category</th>
+				<th>Question Type</th>
+				<th>Question</th>
+				<th>Answer Key</th>
+				<th>Created By</th>
+				<th>Manage</th>
+				</tr>
+				<tr data-ng-repeat="x in quesdetails">
+				<td>{{x.id}}</td>
+				<td>{{x.category}}</td>
+				<td>{{x.difficulty}}</td>
+				<td>{{x.question}}</td>
+				<td>{{x.answer}}</td>
+				<td>{{x.createdby}}</td>
+				<td><button data-ng-click="delete_q_from_a(x.id, assessment_id)">Delete</button></td>
+				</tr>
+		</table>
+		</div>
+<!--<h2>View Assessment</h2>
+<div>
+	<button data-ng-click="go('/assessment/edit')"></button>
+	</div>
 	<table>
 			<tr>
 				<th>ID</th>
@@ -98,10 +123,4 @@
 				
 			
 		</table>
-
-		<div id="buttons" align="center">
-			<button onclick="openpage('editquiz',this)">Edit</button>
-		</div>
-	-->
-	</div>
-	
+		</div>  -->

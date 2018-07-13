@@ -147,18 +147,19 @@ public class StudentHome {
 		return joResult ;
 	}
 	
-	public JSONObject deleteStudent(String empData) {
+	public JSONObject deleteStudent(int student_id) {
 		Transaction tx = null;
+		Student objStudent = new Student();
 		JSONObject result = new JSONObject();
-		
 		try {
 			result.put("id", -1);
 			result.put("message", "Error. Delete failed.");
-			JSONObject joStudent = new JSONObject(empData);
-			Student objStudent = new Student(joStudent);
+			
+		
 			
 			Session objSession = HibernateUtil.getSessionFactory().openSession();
 			tx = objSession.beginTransaction();
+			objStudent =  (Student) objSession.get(Student.class, student_id);
 			objSession.delete(objStudent);
 			result.put("id", "0");
 			result.put("message", "Deleted.");
@@ -166,7 +167,7 @@ public class StudentHome {
 			tx.commit();
 			objSession.close();
 			
-			result.put("id", joStudent.get("id"));
+			//result.put("id", joStudent.get("id"));
 			return result;
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -159,34 +159,34 @@ public class StudentService {
 	@PUT
 	@Path("update")
 	@Produces(MediaType.APPLICATION_JSON)	
-	public JSONObject updateStudent(String data){
+	public Response updateStudent(String data){
 		JSONObject jo = null;
 		try{
 			StudentHome objSH = new StudentHome();
 			jo = objSH.updateStudent(data);
-			return jo;
+		
 		}catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return jo;
+
+		return Response.ok(jo).header("Access-Control-Allow-Origin","*").build();	
 	}
 
 	@DELETE
-	@Path("delete")
+	@Path("delete/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public JSONObject deleteStudent(String data) {
+	public Response deleteStudent(@PathParam("id") int id) {
 		JSONObject jo = null;
 		
 		try {
 			StudentHome objSH = new StudentHome();
-			jo = objSH.deleteStudent(data);
+			jo = objSH.deleteStudent(id);
 
-			return jo;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return jo;
+		return Response.ok(jo).header("Access-Control-Allow-Origin","*").build();		
 	}
 
 }

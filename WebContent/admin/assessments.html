@@ -1,7 +1,9 @@
 <div id="assessments" align="center"  data-ng-init="getAssessment()" >
-	
+
 		<h2>Manage Assessments</h2>
-		
+			<div>	
+		<button data-ng-click="go('/assessment/new')">Create new assessment</button>
+</div>
 		<table>
 			<tr>
 				<th>ID</th>
@@ -12,7 +14,8 @@
 				<th>Max Attempts</th>
 				<th>Created By</th>
 				<th>Difficulty</th>
-				<th>Manage</th>
+				<th>Edit</th>
+				<th>Delete</th>
 			</tr>
 			<tr data-ng-repeat="x in response">
 				<td>{{x.id}}</td>
@@ -24,9 +27,8 @@
 				<td>{{x.createdby}}</td>
 				<td>{{x.difficulty}}</td>
 					<td ><button data-ng-click="viewassessment(x.id)">View</button></td>
+					<td data-ng-controller="assessmentCntrl" ><button data-ng-click="deleteassessment(x.id)">Delete</button></td>
 				</tr>
 		</table>
 	</div>
-	<div>	
-		<button data-ng-click="gotocreateassessment()">Create new assessment</button>
-</div>
+	

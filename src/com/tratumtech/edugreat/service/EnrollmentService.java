@@ -41,25 +41,7 @@ public class EnrollmentService {
 		this.request = request;
 	}
 
-	// working
 
-	@GET
-	@Path("test")
-	@Produces(MediaType.APPLICATION_JSON)
-	public JSONObject testEnrollment() {
-		JSONObject item = new JSONObject();
-		try {
-			item.put("information", "test");
-			item.put("id", 2);
-			item.put("name", "ce1");
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return item;
-	}
-
-	// working
 
 	@GET
 	@Path("all")
@@ -164,16 +146,17 @@ public class EnrollmentService {
 	}
 
 	@DELETE
-	@Path("delete")
+	@Path("delete/{id}")
 	@Produces(MediaType.APPLICATION_JSON)	
-	public JSONObject deleteEnrollment(String data){
+	public Response deleteEnrollment(@PathParam("id") int id){
 		JSONObject jo = null;
 		try{
 			EnrollmentHome objAH = new EnrollmentHome();
-			jo = objAH.deleteEnrollment(data);
+			jo = objAH.deleteEnrollment(id);
 		}catch (Exception e)
 		{e.printStackTrace();
-		}return jo;
+		}
+		return Response.ok(jo).header("Access-Control-Allow-Origin","*").build();	
 	}
 @GET
 @Path("assessment_id/{assessment_id}")

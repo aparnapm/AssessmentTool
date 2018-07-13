@@ -42,19 +42,6 @@ import org.codehaus.jackson.JsonGenerationException;
 			this.request = request;
 		}
 		
-		@GET
-		@Path("test")
-		@Produces(MediaType.APPLICATION_JSON)
-		public JSONObject testAssessment(String data) {
-			JSONObject item = new JSONObject();
-			try {
-				item = new JSONObject(data);
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return item;
-		}
 		
 		@GET
 		@Path("all")
@@ -155,20 +142,19 @@ import org.codehaus.jackson.JsonGenerationException;
 		}
 
 		@DELETE
-		@Path("delete")
+		@Path("delete/{id}")
 		@Produces(MediaType.APPLICATION_JSON)
-		public JSONObject deleteAssessment(String data) {
+		public Response deleteAssessment(@PathParam("id") int id) {
 			JSONObject jo = null;
 			
 			try {
 				AssessmentHome objPH = new AssessmentHome();
-				jo = objPH.deleteAssessment(data);
+				jo = objPH.deleteAssessment(id);
 
-				return jo;
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			return jo;
+			return Response.ok(jo).header("Access-Control-Allow-Origin","*").build();
 		}
 		
 		
@@ -191,10 +177,10 @@ import org.codehaus.jackson.JsonGenerationException;
 		
 		
 		@GET
-		@Path("{id}/questions")
+		@Path("questions/{id}")
 		@Produces(MediaType.APPLICATION_JSON)
 	
-		public JSONArray allQuestions(@PathParam("id") int id) {
+		public Response allQuestions(@PathParam("id") int id) {
 			JSONArray jo = new JSONArray();
 			Set<Questions> emptySet = null;
 			
@@ -221,24 +207,24 @@ import org.codehaus.jackson.JsonGenerationException;
 				e.printStackTrace();
 			}
 			
-			return jo;		
+			return Response.ok(jo).header("Access-Control-Allow-Origin","*").build();		
 		}
 		
 		@DELETE
 		@Path("delete/question")
 		@Produces(MediaType.APPLICATION_JSON)
-		public JSONObject deleteQuestionFromAssessment(String data) {
+		public Response deleteQuestionFromAssessment(String data) {
 		JSONObject jo=null;
 		try
 		{
 			AssessmentHome obj= new AssessmentHome();
 			jo=obj.deleteQuestionFromAssessment(data);
-			return jo;
+		
 		}catch(Exception e)
 		{
 			e.printStackTrace();
 		}
-		return jo;
+		return Response.ok(jo).header("Access-Control-Allow-Origin","*").build();
 		}
 		
 		

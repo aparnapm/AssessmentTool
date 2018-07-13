@@ -1,31 +1,37 @@
-<div id="registerp" class="tabcontent" align="center">
-		<br>
+<div id="registerp" >
 		<h2>Register Parent</h2>
-		<form class="non-modal-content">
-		    <label for="fname">First Name</label>
-		    <input type="text" id="fname" name="firstname">
-
-		    <label for="lname">Last Name</label>
-		    <input type="text" id="lname" name="lastname">
-
-		    <label for="email">Email</label>
-		    <input type="email" id="email" name="email">
-
-		    <label for="mobnum">Mobile Number</label>
-		    <input type="text" id="mobnum" name="mobile_number">
-
-		    <label for="pw">Password</label>
-		    <input type="password" id="pw" name="institution">
-
-		    <label for="cpw">Confirm Password</label>
-		    <input type="password" id="cpw" name="standard">
-
-		    <label for="location">Location</label>
-		    <input type="text" id="location" name="location">
-
-		    <label for="dob">Date of Birth</label>
-		    <input type="date" id="dob" name="date_of_birth">	    
-
-		    <input class="button" type="submit" value="Register">
-	  	</form>
-	</div>
+	<form data-ng-app="myApp"  data-ng-submit="cc.create()">
+      <ul class="form-style-1">
+			<li><label for="firstname">First Name</label>
+			<input type="text" id="firstname" data-ng-model="cc.user.firstName"/>
+</li>
+	<li><label for="lastname">First Name</label>
+			<input type="text" id="lastname" data-ng-model="cc.user.lastName"/>
+</li>
+			<li><label for="email">Email</label>
+			<input type="email" id="email" data-ng-model="cc.user.email" />
+		</li>
+			<li>
+			<label for="phone">Mobile Number</label>
+			<input type="text" id="phone" data-ng-model="cc.user.phone" />
+</li>
+			<li><label for="password">Password</label>
+			<input type="password" id="password" data-ng-model="cc.user.passw" />
+		</li>
+			<li><label for="cpassword">Confirm Password</label>
+			<input type="password" id="cpassword" data-ng-model="cc.user.confirmpassw"/>
+		</li>
+			<li><label for="location">Location</label>
+			<input type="text" id="location" data-ng-model="cc.user.location" />
+		</li>
+		<li><label for="dob">Date of birth</label>
+			<input type="date" id="dob" data-ng-model="cc.user.dob" />
+		</li>
+	  <li>
+			<input type="submit" value="Register">
+			</li>
+			</ul>
+		</form> 
+		</div>	
+		
+	

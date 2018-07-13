@@ -40,26 +40,6 @@ public class AdminService {
 		this.request = request;
 	}
 
-	// working
-
-	@GET
-	@Path("test")
-	@Produces(MediaType.APPLICATION_JSON)
-	public JSONObject testAdmin() {
-		JSONObject item = new JSONObject();
-		try {
-			item.put("information", "test");
-			item.put("id", 2);
-			item.put("name", "ce1");
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return item;
-	}
-
-	// working
-
 	@GET
 	@Path("all")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -93,7 +73,6 @@ public class AdminService {
 		return Response.ok(joAllAdmin).header("Access-Control-Allow-Origin","*").build();		
 	}
 
-	// working
 
 	@GET
 	@Path("{id}")
@@ -147,9 +126,6 @@ public class AdminService {
 		}
 		return jo;
 	}
-
-
-
 
 	@PUT
 	@Path("update")

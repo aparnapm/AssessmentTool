@@ -1,0 +1,63 @@
+<div="viewstudent"  >
+		<h2>Edit student</h2>
+	<form data-ng-app="myApp" data-ng-controller="StudentCntrl"  data-ng-submit="updateStudent(studentdetails)">
+     <ul class="form-style-1">
+			<li><label for="id">Student id</label>
+			<input type="text" id="id" data-ng-model="studentdetails.id" />
+            </li>
+			<li><label for="fname">First Name</label>
+			<input type="text" id="fname" data-ng-model="studentdetails.firstName"/></li>
+			<li><label for="lname">Last Name</label>
+			<input type="text" id="lname" data-ng-model="studentdetails.lastName"/></li>
+
+			<li>
+			<label for="phone">Mobile Number</label>
+			<input type="text" id="phone" data-ng-model="studentdetails.phone" />
+</li>
+<li>
+			<label for="password">Password</label>
+			<input type="password" id="password" data-ng-model="studentdetails.passw" />
+</li>
+<li>
+			<label for="institution">Password</label>
+			<input type="text" id="institution" data-ng-model="studentdetails.institution" />
+</li>
+<li>
+			<label for="standard">Standard</label>
+			<input type="text" id="standard" data-ng-model="studentdetails.standard" />
+</li>
+<li>
+			<label for="location">Location</label>
+			<input type="text" id="location" data-ng-model="studentdetails.location" />
+</li>  
+	  <li>
+			<input type="submit" value="Save Changes"/></li>
+			</ul>
+		</form>
+<div data-ng-init="getStudentEnrollment(studentdetails.id)">
+<h2>Questions</h2>
+		<table >
+			<tr>
+				<th>ID</th>
+				<th>Student ID</th>
+				<th>Assessment ID</th>
+				<th>Valid from</th>
+				<th>Valid until</th>
+				<th>Status</th>
+				<th>Attempts</th>
+				<th>Score</th>
+				<th>Unenroll</th>
+				</tr>
+				<tr data-ng-repeat="x in studentenrollments">
+				<td>{{x.id}}</td>
+				<td>{{x.studentId}}</td>
+				<td>{{x.assessmentId}}</td>
+				<td>{{x.validFrom}}</td>
+				<td>{{x.validUntil}}</td>
+				<td>{{x.stat}}</td>
+				<td>{{x.attempts}}</td>
+				<td>{{x.score}}</td>
+				<td><button data-ng-click="unenrollStudent(x.id)">Unenroll</button></td>
+				</tr>
+		</table>
+		</div>

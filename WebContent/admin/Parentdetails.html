@@ -1,5 +1,10 @@
-<div id="manage_parent"  align="center"  data-ng-init="getParent()" >
+<div align="center" data-ng-init="getParent()" >
   <h2>Manage parent</h2>
+  
+   <div>	
+  <button data-ng-click="go('/Parentdetails/registerp')">Register Parent</button>
+		<!-- <button data-ng-click="registerparent()">Register Parent</button> -->
+</div>
 		<table>
 			<tr>
 			    <th>ID</th>
@@ -19,7 +24,8 @@
 				<td>{{x.phone}}</td>
 				
 				<td>{{x.location}}</td>
-			<td><button onclick="#">View</button></td>
+			<td><button data-ng-click="#">View</button></td>
 				</tr>
 		</table>
   </div>
+ 

@@ -1,6 +1,9 @@
 <div id="questions"  align="center"  data-ng-init="getQuestions()">
 	
 		<h2>Manage Questions</h2>
+		<div>
+		<button data-ng-click="go('/question/new')">Add a new question</button>
+		</div>
 		<table>
 			<tr>
 				<th>ID</th>
@@ -9,7 +12,8 @@
 				<th>Question</th>
 				<th>Answer Key</th>
 				<th>Created By</th>
-				<th>Manage</th>
+				<th>Edit</th>
+				<th>Delete</th>
 				</tr>
 					<tr data-ng-repeat="x in response">
 				<td>{{x.id}}</td>
@@ -20,7 +24,8 @@
 				<td>{{x.answer}}</td>
 				
 				<td>{{x.createdby}}</td>
-			<td><button onclick="#">View</button></td>
+			<td><button onclick="viewquestion(x.id)">View</button></td>
+			<td><button onclick="deletequestion(x.id)">View</button></td>
 				</tr>
 		</table>
 	
