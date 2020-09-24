@@ -1,8 +1,5 @@
 package com.tratumtech.edugreat.service;
 
-import java.io.IOException;
-import java.util.HashSet;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -15,16 +12,9 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.codehaus.jackson.JsonGenerationException;
-import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.annotate.JsonSerialize;
-import org.codehaus.jettison.json.JSONArray;
-import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
-import com.tratumtech.edugreat.tool.Student;
-import com.tratumtech.edugreat.tool.StudentHome;
+import com.tratumtech.edugreat.model.StudentHome;
 
 @Path("student/")
 public class StudentService {
@@ -44,149 +34,115 @@ public class StudentService {
 	@Path("all")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllStudent() {
-		JSONArray joAllStudent = new JSONArray();
-		HashSet<Student> emptySet = null;
-		
+		JSONObject jo = new JSONObject();
 		try {
 			StudentHome objSH = new StudentHome();
-			emptySet = objSH.getAllStudent();
-			
-			if(emptySet != null && !emptySet.isEmpty()){
-				ObjectMapper mapper = new ObjectMapper();	
-				mapper.setSerializationInclusion(JsonSerialize.Inclusion.NON_NULL);
-				joAllStudent = new JSONArray(mapper.writeValueAsString(emptySet));
-			}
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JsonGenerationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			jo = objSH.getAllStudent();
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		return Response.ok(joAllStudent).header("Access-Control-Allow-Origin","*").build();		
+		return Response.ok(jo).header("Access-Control-Allow-Origin", "*").build();			
 	}
 	
 	@GET
 	@Path("{id}")
 	@Produces(MediaType.APPLICATION_JSON)	
-	public JSONObject GetStudentById(@PathParam("id") int id){
-		Student objStudent = null;
+	public Response getStudentById(@PathParam("id") int id){
 		JSONObject jo = new JSONObject();		
 		try{
 			StudentHome objSH = new StudentHome();
-			objStudent = objSH.GetStudentById(id);
-				
-			if(objStudent != null){
-				ObjectMapper mapper = new ObjectMapper();	
-				mapper.setSerializationInclusion(JsonSerialize.Inclusion.NON_NULL);
-				jo = new JSONObject(mapper.writeValueAsString(objStudent));
-			}
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JsonGenerationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			jo = objSH.getStudentById(id);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return jo;
+		return Response.ok(jo).header("Access-Control-Allow-Origin", "*").build();
+	}
+	
+	@POST
+	@Path("get/email")
+	@Produces(MediaType.APPLICATION_JSON)	
+	public Response getStudentByEmail(String data){
+		JSONObject jo = new JSONObject();		
+		try{
+			StudentHome objSH = new StudentHome();
+			jo = objSH.getStudentByEmail(data);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return Response.ok(jo).header("Access-Control-Allow-Origin", "*").build();
 	}
 	
 	@GET
 	@Path("pid/{p_id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public JSONArray GetStudentByParent(@PathParam("p_id") int p_id) {
-		JSONArray joStudentsOfParent = new JSONArray();
-		HashSet<Student> emptySet = null;
-		
+	public Response GetStudentByParent(@PathParam("p_id") int p_id) {
+		JSONObject jo = new JSONObject();
 		try {
 			StudentHome objSH = new StudentHome();
-			emptySet = objSH.getStudentByParent(p_id);
-			
-			if(emptySet != null && !emptySet.isEmpty()){
-				ObjectMapper mapper = new ObjectMapper();	
-				mapper.setSerializationInclusion(JsonSerialize.Inclusion.NON_NULL);
-				joStudentsOfParent = new JSONArray(mapper.writeValueAsString(emptySet));
-			}
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JsonGenerationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			jo = objSH.getStudentByParent(p_id);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		return joStudentsOfParent;		
+		return Response.ok(jo).header("Access-Control-Allow-Origin", "*").build();	
 	}
 	
 	@POST
 	@Path("add")
 	@Produces(MediaType.APPLICATION_JSON)	
-	public JSONObject addStudent(String data){
-		
+	public Response addStudent(String data){
 		JSONObject jo = new JSONObject();
-		
 		try {
-			
 			StudentHome SH = new StudentHome();
 			jo = SH.addStudent(data);
-			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return jo;
+		return Response.ok(jo).header("Access-Control-Allow-Origin", "*")
+				.header("Access-Control-Allow-Methods", "POST, GET, PUT, UPDATE, DELETE, OPTIONS").build();
 	}
 	
 	@PUT
-	@Path("update")
-	@Produces(MediaType.APPLICATION_JSON)	
+	@Path("update")	
 	public Response updateStudent(String data){
-		JSONObject jo = null;
+		JSONObject jo = new JSONObject();		
 		try{
 			StudentHome objSH = new StudentHome();
 			jo = objSH.updateStudent(data);
-		
-		}catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		return Response.ok(jo).header("Access-Control-Allow-Origin","*").build();	
-	}
-
-	@DELETE
-	@Path("delete/{id}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response deleteStudent(@PathParam("id") int id) {
-		JSONObject jo = null;
-		
-		try {
-			StudentHome objSH = new StudentHome();
-			jo = objSH.deleteStudent(id);
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return Response.ok(jo).header("Access-Control-Allow-Origin","*").build();		
+		return Response.ok(jo).header("Access-Control-Allow-Origin", "*")
+				.header("Access-Control-Allow-Methods", "POST, GET, PUT, UPDATE, DELETE, OPTIONS").build();
+	}
+
+	@DELETE
+	@Path("delete")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response deleteStudent(String data) {
+		JSONObject jo = null;
+		try {
+			StudentHome objSH = new StudentHome();
+			jo = objSH.deleteStudent(data);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return Response.ok(jo).header("Access-Control-Allow-Origin", "*")
+				.header("Access-Control-Allow-Methods", "POST, GET, PUT, UPDATE, DELETE, OPTIONS").build();
+	}
+	
+	@POST
+	@Path("change/password")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response changeStudentPassword(String data) {
+		JSONObject jo = null;
+		try {
+			StudentHome objSH = new StudentHome();
+			jo = objSH.changeStudentPassword(data);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return Response.ok(jo).header("Access-Control-Allow-Origin", "*")
+				.header("Access-Control-Allow-Methods", "POST, GET, PUT, UPDATE, DELETE, OPTIONS").build();
 	}
 
 }

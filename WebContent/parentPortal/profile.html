@@ -1,0 +1,99 @@
+<div class="container" style="padding:5%!important;" data-ng-init="profile()">
+	<ul class="nav nav-tabs" data-ng-init="selectedTab = 'main_prof'">
+		<li class="nav-item" data-ng-class="{'active':selectedTab === 'main_prof'}" data-ng-click="selectedTab = 'main_prof'"><a class="nav-link" onclick="openpage('main_profile', this)">Profile</a></li>
+	    <li class="nav-item" data-ng-class="{'active':selectedTab === 'edit_pass'}" data-ng-click="selectedTab = 'edit_pass'"><a class="nav-link" onclick="openpage('edit_passw', this)">Edit Password</a></li>
+	</ul>
+	
+	<div class="tabcontent" style="display:block!important; padding-left:5%!important; padding-right:5%!important" data-ng-submit="updateProfile(myParent)" id="main_profile">
+		<p class="h2" style="margin-bottom:20px!important;">My Profile</p>
+		<div id="parent_profile_errorMessage" data-ng-if="errorMessage" data-ng-model="errorMessage" style="color: red!important;">{{errorMessage}}</div>
+		<div id="parent_profile_successMessage" data-ng-if="successMessage" data-ng-model="successMessage" style="color: green!important;">{{successMessage}}</div>
+		<div id="myProfile_edit" class="container">
+	        <form name="profile_edit" id="profile_edit_form">
+	            <div class="form-group row">
+	                <label class="control-label col-sm-2" style="font-size: 15px!important;" for="profile_firstname">First Name</label>
+	                <div class="col-sm-10">
+	                    <input name="parent_firstname" class="form-control" type="text" data-ng-model="myParent.firstName" required></input>
+	                    <span data-ng-show="profile_edit.profile_firstname.$touched && profile_edit.profile_firstname.$invalid">First Name cannot be empty.</span>
+	                </div>
+	            </div>
+	            <div class="form-group row">
+	                <label class="control-label col-sm-2" style="font-size: 15px!important;" for="profile_lastname">Last Name</label>
+	                <div class="col-sm-10">
+	                    <input name="profile_lastname" class="form-control" type="text" data-ng-model="myParent.lastName" required></input>
+	                    <span data-ng-show="profile_edit.profile_lastname.$touched && profile_edit.profile_lastname.$invalid">Last Name cannot be empty.</span>
+	                </div>
+	            </div>
+	            <div class="form-group row">
+	                <label class="control-label col-sm-2" style="font-size: 15px!important;" for="profile_email">Email</label>
+	                <div class="col-sm-10">
+	                    <input name="profile_email" class="form-control" type="email" data-ng-model="myParent.email" readonly></input>
+	                </div>
+	            </div>
+	            <div class="form-group row">
+	                <label class="control-label col-sm-2" style="font-size: 15px!important;" for="profile_phone">Phone</label>
+	                <div class="col-sm-10">
+	                    <input name="profile_phone" class="form-control" type="text" data-ng-model="myParent.phone" data-ng-pattern="/^(\+91[\-\s]?)?[0]?(91)?[789]\d{9}$/"></input>
+	                    <span data-ng-show="profile_edit.profile_phone.$touched && profile_edit.profile_phone.$invalid">Phone number is not valid.</span>
+	                </div>
+	            </div>
+	            <div class="form-group row">
+	                <label class="control-label col-sm-2" style="font-size: 15px!important;" for="profile_location">Location</label>
+	                <div class="col-sm-10">
+	                    <input name="profile_location" class="form-control" type="text" data-ng-model="myParent.location"></input>
+	                </div>
+	            </div>
+	            <div class="form-group row">
+	                <label class="control-label col-sm-2" style="font-size: 15px!important;" for="profile_dob">Date of Birth</label>
+	                <div class="col-sm-10">
+	                    <input name="profile_dob" class="form-control" type="date" data-ng-model="myParent.dob"></input>
+	                </div>
+	            </div>
+	            <div class="col-sm-offset-2 col-sm-10">
+	            	<button id="profile_submitbtn" type="submit" class="btn btn-success">Save</button>
+	            </div>
+	        </form>
+	    </div>
+	</div>
+	
+	<div class="tabcontent" style="padding-left:5%!important; padding-right:5%!important" data-ng-submit="changePassword(parentPass)" id="edit_passw">
+		<div id="myProfile_passchange" class="container">
+	  		<p>To change your password, enter your old password twice and then your new password</p>
+	  		<div id="parent_profile_passerrorMessage" data-ng-if="errorMessage" data-ng-model="errorMessage" style="color: red!important;">{{errorMessage}}</div>
+			<div id="parent_profile_passsuccessMessage" data-ng-if="successMessage" data-ng-model="successMessage" style="color: green!important;">{{successMessage}}</div>
+	  		<form name="profile_password_edit" id="profile_password_edit_form">
+		  		<div class="form-group">
+					<label for="profile_oldpassword" style="font-size: 15px!important;">Old Password</label>
+					<div>
+						<input name="profile_oldpassword" class="form-control" type="password" data-ng-model="parentPass.oldPassw" data-ng-pattern="/(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z])/" required />
+						<span data-ng-show="!profile_password_edit.profile_oldpassword.$error.required &&  profile_password_edit.profile_oldpassword.$error.pattern && profile_password_edit.profile_oldpassword.$dirty">Must contain one lowercase letter, one uppercase letter, and one non-alpha character (a number or a symbol.)</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="profile_confoldpassword" style="font-size: 15px!important;">Confirm Old Password</label>      
+		      		<div>
+		        		<input name="profile_confoldpassword" class="form-control" type="password" data-ng-model="parentPass.confirm_oldPassw" data-ng-pattern="parentPass.oldPassw" required />
+		        		<span data-ng-show="parentPass.oldPassw != parentPass.confirm_oldPassw">Your passwords must match.</span>
+		      		</div>
+				</div>
+				<div class="form-group">
+					<label for="profile_newpassword" style="font-size: 15px!important;">New Password</label>
+					<div>
+						<input name="profile_newpassword" class="form-control" type="password" data-ng-model="parentPass.newPassw" data-ng-pattern="/(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z])/" required />
+						<span data-ng-show="!profile_password_edit.profile_newpassword.$error.required &&  profile_password_edit.profile_newpassword.$error.pattern && profile_password_edit.profile_newpassword.$dirty">Must contain one lowercase letter, one uppercase letter, and one non-alpha character (a number or a symbol.)</span>
+					</div>
+				</div>	
+				<div class="form-group">
+					<label for="profile_confnewpassword" style="font-size: 15px!important;">Confirm New Password</label>      
+		      		<div>
+		        		<input name="profile_confnewpassword" class="form-control" type="password" data-ng-model="parentPass.confirm_newPassw" data-ng-pattern="parentPass.newPassw" required />
+		        		<span data-ng-show="parentPass.newPassw != parentPass.confirm_newPassw">Your passwords must match.</span>
+		      		</div>
+				</div>
+				<div align="center" class="form-group row">
+	            	<button id="profile_password_submitbtn" type="submit" class="btn btn-success">Change Password</button>
+	            </div>
+			</form>
+		</div>
+	</div>
+</div>

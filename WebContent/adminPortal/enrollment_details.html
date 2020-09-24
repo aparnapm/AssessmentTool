@@ -1,0 +1,83 @@
+<div class="container" style="padding:5%!important">
+	<div id="admin_enrollmentdetails_detailTable" data-ng-show="thisenrollment" align="center" style="padding-left:5%!important; padding-right:5%!important;">
+		<p class="h2" style="margin-bottom:20px!important;">Enrollment Details</p>
+		<div id="admin_enrollmentdetails_errorMessage" data-ng-if="errorMessage" data-ng-model="errorMessage" style="color: red!important;">{{errorMessage}}</div>
+		<table class="table table-hover table-striped">
+			<tr>
+				<th>ID</th>
+				<td>{{thisenrollment.id}}</td>
+			</tr>
+			<tr>
+				<th>Assessment</th>
+				<td><button class="btn btn-primary btn-sm" data-ng-click="viewAssessment(thisenrollment.assessment.id)">{{thisenrollment.assessment.assessmentName}}</button></td>
+			</tr>
+			<tr>
+				<th>Student</th>
+				<td><button class="btn btn-primary btn-sm" data-ng-click="editStudent(thisenrollment.student.id)">{{thisenrollment.student.firstName}} {{thisenrollment.student.lastName}}</button></td>
+			</tr>
+			<tr>
+				<th>Valid From</th>
+				<td>{{thisenrollment.validFrom}}</td>
+			</tr>
+			<tr>
+				<th>Valid Until</th>
+				<td>{{thisenrollment.validUntil}}</td>
+			</tr>
+			<tr>
+				<th>Attempts</th>
+				<td>{{thisenrollment.attempts}}</td>
+			</tr>
+			<tr>
+				<th>Score</th>
+				<td>{{thisenrollment.score}}</td>
+			</tr>
+			<tr>
+				<th>Status</th>
+				<td data-ng-show="thisenrollment.stat=='requested'">Requested</td>
+				<td data-ng-show="thisenrollment.stat=='approved'">Approved</td>
+				<td data-ng-show="thisenrollment.stat=='rejected'">Rejected</td>
+				<td data-ng-show="thisenrollment.stat=='complete'">Student has completed this assessment.</td>
+				<td data-ng-show="thisenrollment.stat=='incomplete'">Enrollment data has passed.</td>
+			</tr>	
+		</table>
+		<div class="container" align="center">
+			<div class="col-sm-4">
+				<button class="btn btn-success" data-ng-show="thisenrollment.stat=='requested'" data-ng-click="approveEnrollment(thisenrollment.id, thisenrollment)">Approve</button>
+			</div>
+			<div class="col-sm-4">
+				<button class="btn btn-danger" data-ng-show="thisenrollment.stat=='requested'" data-ng-click="rejectEnrollment(thisenrollment.id, thisenrollment)">Reject</button>
+			</div>
+		</div>
+		
+		<div id="admin_enrollmentdetails_resultsTable" align="center">
+			<p class="h2" style="margin-bottom:20px!important;">Results</p>
+			<div id="admin_enrollmentdetails_errorMessage2" data-ng-if="errorMessage2" data-ng-model="errorMessage2" style="color: red!important; padding:5%!important;">{{errorMessage2}}</div>
+			<div id="admin_enrollmentdetails_successMessage" data-ng-if="successMessage" data-ng-model="successMessage" style="color: green!important; padding:5%!important;">{{successMessage}}</div>
+			<p align="right"><input type="text" data-ng-model="search" style="padding-left: 10px; padding-right: 10px" placeholder="Search..."></p>
+			<table class="table table-hover table-bordered">
+				<thead class="thead-light">
+					<tr>
+						<th data-ng-click="orderByMe('id')" scope="col">ID</th>
+						<th data-ng-click="orderByMe('dateTaken')" scope="col">Date Taken</th>
+						<th data-ng-click="orderByMe('timeTaken')" scope="col">Time Taken</th>
+						<th data-ng-click="orderByMe('score')" scope="col">Score</th>
+						<th scope="col">View</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr data-ng-repeat="x in enrollmentresults | orderBy: myOrder | filter: search">
+						<td>{{x.id}}</td>
+						<td>{{x.dateTaken}}</td>
+						<td>{{timeToStrShort(x.timeTaken)}}</td>
+						<td>{{x.score}}/{{x.enrollment.assessment.qcount}}</td>
+						<td>
+							<button class="btn btn-info btn-sm" data-ng-click="viewResult(x.id)">VIEW</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<br></br>
+		<button class="btn btn-danger btn-block" data-ng-click="deleteEnrollment(thisenrollment.id)">Delete Enrollment</button>
+	</div>
+</div>

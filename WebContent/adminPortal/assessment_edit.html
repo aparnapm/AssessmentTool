@@ -1,0 +1,65 @@
+<div class="container" style="padding:5%!important;">	
+	<div id="admin_assessmentedit_editForm" data-ng-submit="updateAssessment(thisassessment)" style="padding-left:5%!important; padding-right:5%!important;">
+		<p class="h2" style="margin-bottom:20px!important;">Edit Assessment {{thisassessment.id}}</p>
+		<div id="admin_assessmentedit_errorMessage" data-ng-if="errorMessage" data-ng-model="errorMessage" style="color: red!important;">{{errorMessage}}</div>
+		<div id="admin_assessmentedit_successMessage" data-ng-if="successMessage" data-ng-model="successMessage" style="color: green!important;">{{successMessage}}</div>
+		<form name="assessment_edit" id="assessment_edit_form">
+			<div class="form-group">
+				<label for="assessment_name" style="font-size: 15px!important;">Name</label>
+				<input name="assessment_name" class="form-control" type="text" data-ng-model="thisassessment.assessmentName" required/>
+				<span data-ng-show="assessment_edit.assessment_name.$touched && assessment_edit.assessment_name.$invalid">Assessment must have a name.</span>
+			</div>
+			<div class="form-group">
+				<label for="assessment_desc" style="font-size: 15px!important;">Description</label>
+				<br>
+				<textarea class="form-control rounded-0" name="assessment_desc" rows="3" data-ng-model="thisassessment.description" required></textarea>
+			</div>
+			<div class="form-group row">
+				<label class="control-label col-sm-2" style="font-size: 15px!important;" for="assessment_category">Category</label>
+				<div class="col-sm-10">
+					<select name="assessment_category" class="form-control" data-ng-model="thisassessment.category" required>
+						<option value="mix" data-ng-selected="thisassessment.category == 'mix'">Mix</option>
+	      				<option value="EQ" data-ng-selected="thisassessment.category == 'EQ'">EQ</option>
+	      				<option value="IQ" data-ng-selected="thisassessment.category == 'IQ'">IQ</option>
+	   			 	</select>
+				</div>			
+			</div>
+			<div class="form-group row">
+				<label class="control-label col-sm-2" style="font-size: 15px!important;" for="assessment_difficulty">Difficulty</label>
+				<div class="col-sm-10">
+					<select name="assessment_difficulty" class="form-control" data-ng-model="thisassessment.difficulty" required>
+						<option value="mix" data-ng-selected="thisassessment.difficulty == 'mix'">Mix</option>
+	      				<option value="easy" data-ng-selected="thisassessment.difficulty == 'easy'">easy</option>
+	      				<option value="medium" data-ng-selected="thisassessment.difficulty == 'medium'">medium</option>
+	      				<option value="hard" data-ng-selected="thisassessment.difficulty == 'hard'">hard</option>
+	   			 	</select>
+				</div>			
+			</div>
+			<div class="form-group row">
+				<label class="control-label col-sm-2" style="font-size: 15px!important;" for="assessment_attempts">Attempts</label>
+				<div class="col-sm-10">
+					<input name="assessment_attempts" class="form-control" type="number" data-ng-model="thisassessment.attempts" required/>
+					<span data-ng-show="thisassessment.attempts<=0">Number of attempts must be greater than 0.</span>
+				</div>
+			</div>
+			<div class="form-group row">
+				<label class="control-label col-sm-2" style="font-size: 15px!important;" for="assessment_hours">Hours</label>
+				<div class="col-sm-2">
+					<input name="assessment_hours" class="form-control" type="number" min="0" data-ng-model="thisassessment.timeHours"/>
+				</div>
+				<label class="control-label col-sm-2" style="font-size: 15px!important;" for="assessment_minutes">Minutes</label>
+				<div class="col-sm-2">
+					<input name="assessment_minutes" class="form-control" type="number" min="0" data-ng-model="thisassessment.timeMinutes"/>
+				</div>
+				<label class="control-label col-sm-2" style="font-size: 15px!important;" for="assessment_seconds">Seconds</label>
+				<div class="col-sm-2">
+					<input name="assessment_seconds" class="form-control" type="number" min="0" data-ng-model="thisassessment.timeSeconds"/>
+				</div>
+			</div>				
+			<div align="center" class="form-group row">
+				<button id="edit_assessment_submitbtn" type="submit" class="btn btn-success">Save</button>
+				<button id="delete_assessment_btn" class="btn btn-danger" data-ng-click="deleteAssessment(thisassessment.id)">Delete</button>
+			</div>
+		</form>
+	</div>
+</div>

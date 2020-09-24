@@ -1,0 +1,29 @@
+<div class="container" style="padding:5%!important;">
+	<div id="parent_results_resultTable" class="container" align="center">
+		<div id="parent_resultTable_errorMessage" data-ng-if="errorMessage" data-ng-model="errorMessage" style="color: red!important;">{{errorMessage}}</div>
+		<p class="h2" style="margin-bottom:20px!important;">Results for Enrollment {{thisenrollment.id}}</p>
+		<p align="right"><input type="text" data-ng-model="search" style="padding-left: 10px; padding-right: 10px" placeholder="Search..."></p>
+		<table class="table table-hover table-bordered">
+			<thead class="thead-light">
+				<tr>
+					<th data-ng-click="orderByMe('id')" scope="col">ID</th>
+					<th data-ng-click="orderByMe('dateTaken')" scope="col">Date Taken</th>
+					<th data-ng-click="orderByMe('timeTaken')" scope="col">Time Taken</th>
+					<th data-ng-click="orderByMe('score')" scope="col">Score</th>
+					<th scope="col">View</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr data-ng-repeat="x in enrollmentResults | orderBy: myOrder | filter: search">
+					<td>{{x.id}}</td>
+					<td>{{x.dateTaken}}</td>
+					<td>{{timeToStrShort(x.timeTaken)}}</td>
+					<td>{{x.score}}</td>
+					<td>
+						<button class="btn btn-info btn-sm" data-ng-click="getResult(x.id)">VIEW</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

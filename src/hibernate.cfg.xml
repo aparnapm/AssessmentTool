@@ -9,11 +9,13 @@
         <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/edugreat</property>
         <property name="hibernate.connection.username">root</property>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
-        <mapping resource="com/tratumtech/edugreat/tool/Admin.hbm.xml"/>
-        <mapping resource="com/tratumtech/edugreat/tool/Student.hbm.xml"/>
-        <mapping resource="com/tratumtech/edugreat/tool/Parent.hbm.xml"/>
-        <mapping resource="com/tratumtech/edugreat/tool/Questions.hbm.xml"/>
-         <mapping resource="com/tratumtech/edugreat/tool/Assessment.hbm.xml"/>
-            <mapping resource="com/tratumtech/edugreat/tool/Enrollment.hbm.xml"/>
+        <mapping resource="com/tratumtech/edugreat/model/Admin.hbm.xml"/>
+        <mapping resource="com/tratumtech/edugreat/model/Student.hbm.xml"/>
+        <mapping resource="com/tratumtech/edugreat/model/Parent.hbm.xml"/>
+        <mapping resource="com/tratumtech/edugreat/model/Questions.hbm.xml"/>
+        <mapping resource="com/tratumtech/edugreat/model/Assessment.hbm.xml"/>
+        <mapping resource="com/tratumtech/edugreat/model/Enrollment.hbm.xml"/>
+        <mapping resource="com/tratumtech/edugreat/model/SignIn.hbm.xml"/>
+        <mapping resource="com/tratumtech/edugreat/model/Result.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>

@@ -1,0 +1,69 @@
+<div class="container" style="padding:5%!important;">	
+	<div id="parent_studentedit_editForm" data-ng-submit="updateStudent(thisstudent)" style="padding-left:5%!important; padding-right:5%!important;">
+		<p class="h2" style="margin-bottom:20px!important;">Edit Student {{thisstudent.id}}</p>
+		<div id="parent_studentedit_errorMessage" data-ng-if="errorMessage" data-ng-model="errorMessage" style="color: red!important;">{{errorMessage}}</div>
+		<div id="parent_studentedit_successMessage" data-ng-if="successMessage" data-ng-model="successMessage" style="color: green!important;">{{successMessage}}</div>
+		<form name="student_edit" id="student_edit_form">
+			<div class="form-group row">
+				<label class="control-label col-sm-2" style="font-size: 15px!important;" for="student_firstname">First Name</label>
+				<div class="col-sm-10">
+					<input name="student_firstname" class="form-control" type="text" data-ng-model="thisstudent.firstName" required></input>
+					<span data-ng-show="student_edit.student_firstname.$touched && student_edit.student_firstname.$invalid">First Name cannot be empty.</span>
+				</div>
+			</div>
+			<div class="form-group row">
+				<label class="control-label col-sm-2" style="font-size: 15px!important;" for="student_lastname">Last Name</label>
+				<div class="col-sm-10">
+					<input name="student_lastname" class="form-control" type="text" data-ng-model="thisstudent.lastName" required></input>
+					<span data-ng-show="student_edit.student_lastname.$touched && student_edit.student_lastname.$invalid">Last Name cannot be empty.</span>
+				</div>
+			</div>
+			<div class="form-group row">
+				<label class="control-label col-sm-2" style="font-size: 15px!important;" for="student_email">Email</label>
+				<div class="col-sm-10">
+					<input name="student_email" class="form-control" type="email" data-ng-model="thisstudent.email" readonly></input>
+				</div>
+			</div>
+			<div class="form-group row">
+				<label class="control-label col-sm-2" style="font-size: 15px!important;" for="student_phone">Phone</label>
+				<div class="col-sm-10">
+					<input name="student_phone" class="form-control" type="text" data-ng-model="thisstudent.phone" data-ng-pattern="/^(\+91[\-\s]?)?[0]?(91)?[789]\d{9}$/"></input>
+					<span data-ng-show="student_edit.student_phone.$touched && student_edit.student_phone.$invalid">Phone number is not valid.</span>
+				</div>
+			</div>
+			<div class="form-group row">
+                <label class="control-label col-sm-2" style="font-size: 15px!important;" for="student_institution">Institution</label>
+                <div class="col-sm-10">
+                    <input name="student_institution" class="form-control" type="text" data-ng-model="thisstudent.institution"></input>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="control-label col-sm-2" style="font-size: 15px!important;" for="student_standard">Standard</label>
+                <div class="col-sm-10">
+                    <input name="student_standard" class="form-control" type="number" data-ng-model="thisstudent.standard"></input>
+                    <span data-ng-show="thisstudent.standard>12">Student standard cannot be greater than 12.</span>
+                </div>
+            </div>
+			<div class="form-group row">
+                <label class="control-label col-sm-2" style="font-size: 15px!important;" for="student_location">Location</label>
+                <div class="col-sm-10">
+                    <input name="student_location" class="form-control" type="text" data-ng-model="thisstudent.location"></input>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="control-label col-sm-2" style="font-size: 15px!important;" for="student_dob">Date of Birth</label>
+                <div class="col-sm-10">
+                    <input name="student_dob" class="form-control" type="date" data-ng-model="thisstudent.dob"></input>
+                </div>
+            </div>
+            <div align="center" class="form-group row">
+				<button id="edit_student_submitbtn" type="submit" class="btn btn-success">Save</button>
+			</div>
+		</form>
+		<div id="parent_studentdetails_viewEnrollmentbtn" data-ng-show="thisstudent" align="center" style="padding:5%!important;">
+			<button class="btn btn-primary btn-block" data-ng-click="viewStudentEnrollments(thisstudent.id)">View Enrollments</button>
+		</div>
+	</div>
+</div>

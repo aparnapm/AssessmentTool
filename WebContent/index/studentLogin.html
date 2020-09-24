@@ -1,0 +1,17 @@
+<div class="container" style="padding:5%!important;">
+	<div id="studentlogin" class="container" data-ng-init="getLogin('student')" data-ng-submit="studentLogin(studentdetails)" style="padding-left:10%!important; padding-right:10%!important;">
+		<p class="h2" style="margin-bottom:20px!important;">Login to Student Portal</p>
+		<div id="index_studentlogin_errorMessage" data-ng-if="errorMessage" data-ng-model="errorMessage" style="color: red!important;">{{errorMessage}}</div>
+		<form id="studentUser_login">
+			<div class="form-group">
+				<label for="student_email" style="font-size: 15px!important;">Email</label> 
+				<input id="student_email" class="form-control" type="email" data-ng-model="studentdetails.email" required></input>
+			</div>
+			<div class="form-group">
+				<label for="student_passw" style="font-size: 15px!important;">Password</label> 
+				<input id="student_passw" class="form-control" type="password" data-ng-model="studentdetails.passw" required></input>
+			</div>
+			<button type="submit" class="btn btn-primary">Login</button>
+		</form>
+	</div>
+</div>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated Jul 3, 2018 4:20:33 PM by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="edugreat" dynamic-insert="false" dynamic-update="false" mutable="true" name="com.tratumtech.edugreat.model.Result" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="result">
+        <id name="id" type="int">
+            <column name="id"/>
+            <generator class="increment"/>
+        </id>
+        <property generated="never" lazy="false" name="dateTaken" optimistic-lock="true" type="date" unique="false">
+            <column length="10" name="date_taken"/>
+        </property>
+        <property generated="never" lazy="false" name="timeTaken" optimistic-lock="true" type="java.lang.Integer" unique="false">
+            <column name="time_taken"/>
+        </property>
+        <property generated="never" lazy="false" name="score" optimistic-lock="true" type="java.lang.Integer" unique="false">
+            <column name="score"/>
+        </property>
+        <many-to-one name="enrollment"  lazy="false" class="com.tratumtech.edugreat.model.Enrollment"
+            column="enrollment_id"/>
+    </class>
+</hibernate-mapping>

@@ -1,354 +1,362 @@
-    var app = angular.module("myApp", ["ngRoute"]);
-/*    .service('sharedId', function () {
-        var id = '';
+var app = angular.module("mainApp", ["ngRoute", "ngCookies"]);
 
-        return {
-            getId: function () {
-                return id;
-            },
-            setId: function(value) {
-                id = value;
-            }
-        };
+app.config(function($routeProvider) {
+    $routeProvider
+    .when("/", {
+        templateUrl : "index/home.html",
+        controller : "indexController"
+    })
+    .when("/adminPortal", {
+        templateUrl : "index/adminLogin.html",
+        controller : "indexController"
+    })
+    .when("/parentPortal", {
+        templateUrl : "index/parentLogin.html",
+        controller : "indexController"
+    })
+    .when("/studentPortal", {
+        templateUrl : "index/studentLogin.html",
+        controller : "indexController"
+    })
+    .when("/register", {
+        templateUrl : "index/parentRegister.html",
+        controller : "indexController"
+    })
+    .when("/about", {
+        templateUrl : "index/about.html",
+        controller : "indexController"
+    })
+    .when("/contact", {
+        templateUrl : "index/contact.html",
+        controller : "indexController"
+    })
+    .when("/confirm/:usertype/email=:emailID/auth=:authID", {
+        templateUrl : "index/confirm.html",
+        controller : "indexController"
+    })
+    .when("/error/unknown", {
+        templateUrl : "index/unknown_error.html",
+        controller : "indexController"
+    })
+    .when("/logout_success", {
+        templateUrl : "index/logout_success.html",
+        controller : "indexController"
+    })
+    .when("/logout_error", {
+        templateUrl : "index/logout_error.html",
+        controller : "indexController"
+    })
+    .when("/no_auth", {
+        templateUrl : "index/no_auth.html",
+        controller : "indexController"
     });
-*/
-    app.controller("myController", function($scope ,$rootScope, $http, $window, $location) {
-    	$scope.go = function ( path ) {
-    		  $location.path( path );
-    		};
-    		
-    	
-    	$scope.getAssessment = function () {
+});
 
-            $http.get("http://localhost:8080/edugreat/service/assessment/all")
-                .then(function successCallback(response){
-                    $scope.response = response.data;
-                }, function errorCallback(response){
-                    console.log("Unable to perform get request");
-                });
-        };
-       
-        $scope.getAdmin = function () {
+app.controller('indexController' , function ($scope, $rootScope, $http, $location, $window, $filter, $cookies, $anchorScroll, $routeParams) {
+	
+	$scope.errorMessage=false;
+	$scope.successMessage=false;
+	
+	$scope.initialize = function() {
+		console.log("Initializing hibernate connection");
+		$http.get("http://localhost:8080/edugreat/service/authorization/initialize")
+			.then(function successCallback(response) {
+				console.log("Initialized.");
+				$scope.for_reg = response.data;
+			}, function errorCallback(response) {
+				console.log("Error in database initialization.");
+			});
+	};
+	
+	$scope.getEmails = function() {
+		$http.get("http://localhost:8080/edugreat/service/authorization/getemails")
+			.then(function successCallback(response) {
+	            $rootScope.allemails = response.data.object;
+	        }, function errorCallback(response) {
+	            console.log("Something went wrong");
+	        });
+	};
+	
+	$scope.registerParent = function(details) {
+		console.log("Registering new parent.");
+		details["userType"]="parent";
+		details.generate=false;
+		$http.post("http://localhost:8080/edugreat/service/parent/add", details)
+			.then(function successCallback(response) {
+				if (response.data.status == "VALID") {
+					$scope.successMessage = "Registered user! A confirmation email has been sent.";
+					var userdata = response.data;
+    				var emailInfo = {
+    					"email": userdata.object.email,
+    					"subject": "Confirm New Account",
+    					"message": "To "+userdata.object.firstName+" "+userdata.object.lastName+"\n\nCongratulations, " +
+    							"you have signed up for an Edugreat account! \nClick the following link to confirm your " +
+    									"email: \n\nhttp://localhost:8080/edugreat/main_index.html#!/confirm/parent/email="+
+    									userdata.object.email+"/auth="+userdata.auth+"\n\nPlease click the confirmation" +
+    											"link and then you can log into your account.\n\n	Sincerely, " +
+    											"\n\n	Edugreat"
+    				};
+    				$http.post("http://localhost:8080/edugreat/service/authorization/send", emailInfo)
+    					.then(function successCallback(response) {
+    						if (response.data.status == "INVALID") {
+    							console.log("Failed to send message to parent.");
+    						} else {
+    							console.log("Email sent to parent!");
+    						}
+    					}, function errorCallback(response) {
+    						console.log("Failed to send message to parent.");
+    					});
+					
+				}
+				else {
+					console.log(response.data);
+					$anchorScroll("parentregister");
+					if (response.data.message == "JSONObject has insufficient information.") {
+						$scope.errorMessage = "The email entered is already associated with another user.";
+					}
+					else {
+						$scope.errorMessage = "A database error occured.";
+					}
+				}
+	        }, function errorCallback(response) {
+	            console.log("Something went wrong.");
+	            $window.location.href='#!error/unknown'
+	        });
+	};
+	
+	$scope.confirmEmail = function() {
+		console.log("Confirming email.");
+		$http.get("http://localhost:8080/edugreat/service/authorization/confirm/email="+$routeParams.emailID+"/auth="+$routeParams.authID)
+			.then(function successCallback(response) {
+				if (response.data.status == "INVALID") {
+					console.log(response.data);
+					$window.location.href='#!error/unknown'
+				} else {
+					console.log("Email confirmed! Redirecting to login...");
+					if ($routeParams.usertype=="admin") {
+						$window.location.href="#!adminPortal"
+					} else if($routeParams.usertype=="parent"){
+						$window.location.href="#!parentPortal"
+					} else if($routeParams.usertype=="student") {
+						$window.location.href="#!studentPortal"
+					} else {
+						$window.location.href="#!error/unknown"
+						console.log("User type invalid.");
+					}
+				}
+			}, function errorCallback(response) {
+				console.log("Something went wrong.");
+	            $window.location.href='#!error/unknown'
+			});
+	};
+	
+	$scope.adminLogin = function(admindetails) {
+		console.log("Logging in (admin).");
+		var data = {
+			"email": admindetails.email,
+			"passw": admindetails.passw,
+			"userType": "admin"
+		};
+		$http.post("http://localhost:8080/edugreat/service/authorization/log_in", data)
+			.then(function successCallback(response) {
+				$rootScope.validation = response.data;
+				if ($rootScope.validation.status == "VALID") {
+					$cookies.put("auth", JSON.stringify($rootScope.validation));
+					$window.location.href = '/edugreat/admin_index.html'
+				}
+				else {
+					$anchorScroll("adminlogin");
+					console.log($rootScope.validation);
+					if ($rootScope.validation.message == "User type is wrong.") {
+						$scope.errorMessage = "You are trying to log into the wrong portal. Try a different user.";
+					}
+					else if ($rootScope.validation.message == "Session Factory uninitialized.") {
+						$scope.errorMessage = "A database error occured.";
+					}
+					else if ($rootScope.validation.message == "Object not found.") {
+						$scope.errorMessage = "This email is not in our records. Check for spelling mistakes and try again.";
+					}
+					else if ($rootScope.validation.message == "Password is incorrect.") {
+						$scope.errorMessage = "The password you entered is incorrect.";
+					} 
+					else if ($rootScope.validation.message == "User is not active.") {
+						$scope.errorMessage = "This account is not activated.";
+					}
+					else {
+						$scope.errorMessage = "Something went wrong and we're not sure what. Please try again.";
+					}
+				}
+			}, function errorCallback(response) {
+				$anchorScroll("adminlogin");
+				$scope.errorMessage = "Something went wrong and we're not sure what. Please try again.";
+				console.log(response.data);
+			});
+	};
+	
+	$scope.parentLogin = function(parentdetails) {
+		console.log("Logging in (parent).");
+		var data = {
+			"email": parentdetails.email,
+			"passw": parentdetails.passw,
+			"userType": "parent"
+		};
+		$http.post("http://localhost:8080/edugreat/service/authorization/log_in", data)
+			.then(function successCallback(response) {
+				$rootScope.validation = response.data;
+				if ($rootScope.validation.status == "VALID") {
+					$cookies.put("auth", JSON.stringify($rootScope.validation));
+					$window.location.href = '/edugreat/parent_index.html'
+				}
+				else {
+					$anchorScroll("parentlogin");
+					console.log($rootScope.validation);
+					if ($rootScope.validation.message == "User type is wrong.") {
+						$scope.errorMessage = "You are trying to log into the wrong portal. Try a different user.";
+					}
+					else if ($rootScope.validation.message == "Session Factory uninitialized.") {
+						$scope.errorMessage = "A database error occured.";
+					}
+					else if ($rootScope.validation.message == "Object not found.") {
+						$scope.errorMessage = "This email is not in our records. Check for spelling mistakes and try again.";
+					}
+					else if ($rootScope.validation.message == "Password is incorrect.") {
+						$scope.errorMessage = "The password you entered is incorrect.";
+					} 
+					else if ($rootScope.validation.message == "User is not active.") {
+						$scope.errorMessage = "This account is not activated.";
+					}
+					else {
+						$scope.errorMessage = "Something went wrong and we're not sure what. Please try again.";
+					}
+				}
+			}, function errorCallback(response) {
+				$anchorScroll("parentlogin");
+				$scope.errorMessage = "Something went wrong and we're not sure what. Please try again.";
+				console.log(response.data);
+			});
+	};
+	
+	$scope.studentLogin = function(studentdetails) {
+		console.log("Logging in (student).");
+		var data = {
+			"email": studentdetails.email,
+			"passw": studentdetails.passw,
+			"userType": "student"
+		};
+		$http.post("http://localhost:8080/edugreat/service/authorization/log_in", data)
+			.then(function successCallback(response) {
+				$rootScope.validation = response.data;
+				if ($rootScope.validation.status == "VALID") {
+					$cookies.put("auth", JSON.stringify($rootScope.validation));
+					$window.location.href = '/edugreat/student_index.html'
+				}
+				else {
+					$anchorScroll("studentlogin");
+					console.log($rootScope.validation);
+					if ($rootScope.validation.message == "User type is wrong.") {
+						$scope.errorMessage = "You are trying to log into the wrong portal. Try a different user.";
+					}
+					else if ($rootScope.validation.message == "Session Factory uninitialized.") {
+						$scope.errorMessage = "A database error occured.";
+					}
+					else if ($rootScope.validation.message == "Object not found.") {
+						$scope.errorMessage = "The email you entered is not valid.";
+					}
+					else if ($rootScope.validation.message == "Password is incorrect.") {
+						$scope.errorMessage = "The password you entered is incorrect.";
+					}
+					else if ($rootScope.validation.message == "User is not active.") {
+						$scope.errorMessage = "This account is not activated.";
+					}
+					else {
+						$scope.errorMessage = "Something went wrong and we're not sure what. Please try again.";
+					}
+				}
+			}, function errorCallback(response) {
+				$anchorScroll("studentlogin");
+				$scope.errorMessage = "Something went wrong and we're not sure what. Please try again.";
+				console.log(response.data);
+			});
+	};
+	
+	$scope.contactUs = function(contact) {
+		console.log("Sending info!");
+		var emailInfo = {
+				"email": "bhadra.chembukave@gmail.com",
+				"subject": "New Website Message",
+				"message": "From "+contact.name+"\n\nMessage: \n"+contact.desc+"\n\nReply email: "+contact.email
+			};
+			$http.post("http://localhost:8080/edugreat/service/authorization/send", emailInfo)
+				.then(function successCallback(response) {
+					if (response.data.status == "INVALID") {
+						console.log(response.data);
+						$scope.errorMessage = "Sorry! Something went wrong. Failed to send message.";
+					} else {
+						$window.location.href = "#!"
+						$scope.successMessage = "Message sent!";
+					}
+				}, function errorCallback(response) {
+					console.log("Something went wrong.");
+		            $window.location.href='#!error/unknown'
+				});
+	};
+	
+	$scope.getLogin = function(usertype) {
+		console.log("Checking for cookie auth");
+		var cookieExists = $cookies.get("auth");
+		
+		if (cookieExists) {
+			var cookie = JSON.parse($cookies.get("auth"));
+			var token = {
+					"auth": cookie.auth,
+					"userType": usertype,
+					"email": cookie.email
+				};
+			console.log(token);
+			$http.post("http://localhost:8080/edugreat/service/authorization/check_token", token)
+				.then(function successCallback(response) {
+					$rootScope.validation = response.data;
+					if ($rootScope.validation.status == "INVALID") {
+						$scope.clearCookies();
+					}
+					else {
+						console.log("Auth verified");
+						if (usertype=="admin") {
+							$window.location.href = "/edugreat/admin_index.html"
+						} else if (usertype=="parent") {
+							$window.location.href = "/edugreat/parent_index.html"
+						} else {
+							$window.location.href = "/edugreat/student_index.html"
+						}
+					}
+				}, function errorCallback(response) {
+					console.log("Something went wrong.");
+					$window.location.href='#!error/unknown'
+				});
+		}
+	};
 
-            $http.get("http://localhost:8080/edugreat/service/admin/all")
-                .then(function successCallback(response){
-                    $scope.response = response.data;
-                }, function errorCallback(response){
-                    console.log("Unable to perform get request");
-                });
-        };
-        
-        $scope.getParent= function () {
-
-            $http.get("http://localhost:8080/edugreat/service/parent/all")
-                .then(function successCallback(response){
-                    $scope.response = response.data;
-                }, function errorCallback(response){
-                    console.log("Unable to perform get request");
-                });
-        };
-        $scope.getStudent = function () {
-
-            $http.get("http://localhost:8080/edugreat/service/student/all")
-                .then(function successCallback(response){
-                    $scope.response = response.data;
-                }, function errorCallback(response){
-                    console.log("Unable to perform get request");
-                });
-        };
-        $scope.getQuestions= function () {
-
-            $http.get("http://localhost:8080/edugreat/service/question/all")
-                .then(function successCallback(response){
-                    $scope.response = response.data;
-                }, function errorCallback(response){
-                    console.log("Unable to perform get request");
-                });
-        };
-
-    	$scope.viewassessment = function (id) {
-    		$window.location.href="#!assessment/view"
-    		$http.get ("http://localhost:8080/edugreat/service/assessment/"+id)
-            .then(function successCallback(response){
-            	$rootScope.assessmentdetails=response.data;
-            	console.log($rootScope.assessmentdetails);
-                //$rootScope.details = response.data;
-            }, function errorCallback(response){
-                console.log("Unable to perform get request");
-            });
-    		var assessmentquestion = function (id) {
-    			$http.get ("http://localhost:8080/edugreat/service/assessment/questions/"+id)
-    			    .then(function successCallback(response){
-    			        $rootScope.quesdetails = response.data;
-    			    }, function errorCallback(response){
-    			        console.log("Unable to perform get request");
-    			    });
-    			     //console.log($rootScope.quesdetails);
-    			}	
-    		assessmentquestion(id);
-    		$rootScope.assessment_id = id;
-
-    };
-
-        $scope.delete_q_from_a =function(q_id, a_id){
-        	/*	$http.get ("http://localhost:8080/edugreat/service/question/"+id)
-        		.then(function successCallback(response){
-        			$rootScope.question= response.data;
-        		});*/
-        		$http({
-        			method: 'DELETE',
-        			url:" http://localhost:8080/edugreat/service/assessment/delete/question" , 
-        			data:
-                    {
-                        question_id: q_id,
-                        assessment_id: a_id
-                    }
-                })
-        	//$http.delete ("http://localhost:8080/edugreat/service/assessment/delete/question" , $rootScope.question)
-          .then(function successCallback(response){
-             $window.alert("Question deleted");
-         }, function errorCallback(response){
-             $window.alert("Unable to delete question");
-         });
-      };
-
-  /*    $scope.gotocreateassessment = function () {
-       $window.location.href="#!assessment/create"
-       $rootScope.newdetails ={
-         id:0,
-         assessmentName:"",
-         description:"",
-         category:"",
-         qcount:"",
-         attempts:"",
-         createdby:"",
-         difficulty:"",
-     }	
-    };*/
-  /*  $scope.createassessment=function(newdetails){
-       
-       $http.post("http://localhost:8080/edugreat/service/assessment/add", newdetails)
-       .then(function successCallback(response){
-        $rootScope.newdetails = response.data;
-    }, function errorCallback(response){
-        console.log("Unable to perform get request");
-    });
-       $window.location.href="#!assessment"
-    };*/
-
-    $scope.update=function(assessmentdetails){
-       
-       $http.put("http://localhost:8080/edugreat/service/assessment/update", assessmentdetails)
-       .then(function successCallback(response){
-        $rootScope.assessmentdetails = response.data;
-    }, function errorCallback(response){
-        console.log("Unable to perform get request");
-    });
-       $window.location.href="#!assessment"
-    };
-/*    $scope.registerparent = function () {
-       $window.location.href="#!Parentdetails/registerp"
-       $rootScope.pdetails ={
-         firstName:"",
-         lastName:"",
-         email:"",
-         phone:"",
-         passw:"",
-         location:"",
-         dob:""
-     }	
-    };
-    $scope.registerp=function(pdetails){
-       
-       $http.post("http://localhost:8080/edugreat/service/parent/add", pdetails)
-       .then(function successCallback(response){
-        $rootScope.pdetails = response.data;
-    }, function errorCallback(response){
-        console.log("Unable to perform get request");
-    });
-       $window.location.href="#!Parentdetails"
-    };
-*/
-
-
-    });
-    app.controller("parentController",function($scope ,$http){
-    	console.log("inside register");
-    	$scope.cc= this;
-    	$scope.cc.user={};
-
-    	$scope.cc.create=function(){
-    		console.log("submitted");
-    	if($scope.cc.user.passw!==$scope.cc.user.confirmpassw){
-    		alert("password mismatch")
+    $scope.clearCookies = function () {
+    	var authExist = $cookies.get("auth");
+    	if (authExist) {
+    		var cookie = JSON.parse($cookies.get("auth"));
+			var token = {
+					"auth": cookie.auth,
+					"email": cookie.email
+				};
+			$http.post("http://localhost:8080/edugreat/service/authorization/log_out", token)
+				.then(function successCallback(response) {
+					$rootScope.validation = response.data;
+					console.log($rootScope.validation);
+				}, function errorCallback(response) {
+					console.log("Something went wrong.");
+					$window.location.href='#!error/unknown'
+				});
+	        $cookies.remove("auth");
     	}
-    	else{
-    		  $http({'method': 'POST',
-    		         'url':"http://localhost:8080/edugreat/service/parent/add" , 
-    		         'data': $scope.cc.user })
-    		
-    		   .then(function successCallback(response){
-    		       alert("registered successfully");
-    		    }, function errorCallback(response){
-    		        console.log("Unable to add");
-    		    });
-    		}
+    	var profExist = $cookies.get("profile");
+    	if (profExist) {
+    		$cookies.remove("profile");
     	}
-    });
-    app.controller("assessmentCntrl",function($scope ,$http ){
-    	$scope.assessment= this;
-    	$scope.assessment.test={};
-    	$scope.assessment.create=function(){
-        $http({'method': 'POST',
-    		         'url':"http://localhost:8080/edugreat/service/assessment/add" , 
-    		         'data': $scope.assessment.test })
-    		
-    		   .then(function successCallback(response){
-    		       alert("assessment created successfully");
-    		    }, function errorCallback(response){
-    		        console.log("Unable to create assessment");
-    		    });
-    	}
-    	$scope.deleteassessment = function (id) {
-    	    	console.log(id);
-    	      $http({
-    	         'method': 'DELETE',
-    	         'url':"http://localhost:8080/edugreat/service/assessment/delete/"+id  
-    	    })
-    	      .then(function successCallback(response){
-    	            alert("Assessment deleted");
-    	     }, function errorCallback(response){
-    	         alert("Unable to delete assessment");
-    	     });
-    	    };
-    	
-    });
-    app.controller("StudentCntrl",function($scope ,$http , $window ,$rootScope){
-    	
-    	$scope.deleteStudent =function(id){
-        $http({'method': 'DELETE',
-    		         'url':"http://localhost:8080/edugreat/service/student/delete/"+id , 
-    		         })
-    		   .then(function successCallback(response){
-    		       alert("student deleted successfully");
-    		    }, function errorCallback(response){
-    		        console.log("Unable to delete student");
-    		    });
-    	}
-    	$scope.viewStudent =function(id){
-    		 $window.location.href="#!Studentdetails/viewstudent"
-            $http({'method': 'GET',
-        		         'url':"http://localhost:8080/edugreat/service/student/"+id , 
-        		         })
-        		   .then(function successCallback(response){
-        		      $rootScope.studentdetails=response.data;
-        		      console.log(studentdetails);
-        		    }, function errorCallback(response1){
-        		        console.log("Unable to get student basic details");
-        		    });
-            var getStudentEnrollment=function(id){
-            $http({'method': 'GET',
-		         'url':"http://localhost:8080/edugreat/service/enrollment/student_id/"+ id, 
-		         })
-		   .then(function successCallback(response){
-		      $rootScope.studentenrollments=response.data;
-		    }, function errorCallback(response){
-		        console.log("Unable to get student enrollement details");
-		    });
-           
-        	}
-            getStudentEnrollment(id);
-            }
-    	$scope.unenrollStudent = function(id){
-    		console.log(id);
-  	      $http({
-  	         'method': 'DELETE',
-  	         'url':"http://localhost:8080/edugreat/service/enrollment/delete/"+id  
-  	    })
-  	      .then(function successCallback(response){
-  	            alert("Student unenrolled");
-  	     }, function errorCallback(response){
-  	         alert("Unable to unenroll");
-  	     });
-  	    };
-    	  $scope.updateStudent=function(studentdetails){
-    	       
-    	       $http.put("http://localhost:8080/edugreat/service/student/update", studentdetails)
-    	       .then(function successCallback(response){
-    	        $rootScope.studentdetails = response.data;
-    	        alert("Updated")
-    	    }, function errorCallback(response){
-    	        console.log("Unable to perform get request");
-    	    });
-    	    };
-    });
-        app.config(function($routeProvider) {
-            $routeProvider
-            .when("/home", {
-                templateUrl : "adminhome.html",
-                controller:"myController"
-            })
-            .when("/assessment", {
-                templateUrl : "assessments.html",
-                	 controller:"myController"
-            })
-            .when("/questions", {
-                templateUrl : "questions.html"
-                	,
-               	 controller:"myController"
-            })
-            
-            .when("/requests", {
-                templateUrl :"requests.html"
-                	,
-               	 controller:"myController"
-            })
-            .when("/Admindetails", {
-                templateUrl :"Admindetails.html"
-                	,
-               	 controller:"myController"
-            })
-            .when("/Studentdetails", {
-                templateUrl :"Studentdetails.html"
-                	,
-               	 controller:"myController"
-            })
-            .when("/Parentdetails", {
-                templateUrl :"Parentdetails.html"
-                	,
-               	 controller:"myController"
-            })
-            .when("/profile", {
-                templateUrl :"profile.html"
-                	,
-               	 controller:"myController"
-            })	
-              .when("/assessment/new", {
-              templateUrl :"createassessment.html",
-             	 controller:"assessmentCntrl"
-            })
-            .when("/assessment/view", {
-                templateUrl :"viewassessment.html"
-                	,
-               	 controller:"myController"
-            })
-           .when("/Parentdetails/registerp", {
-              templateUrl :"registerp.html"
-            	  ,
-             	 controller:"parentController"
-            })
-              .when("/question/new", {
-              templateUrl :"createquestion.html",
-             	 controller:"assessmentCntrl"
-            })
-              .when("/assessment/edit", {
-              templateUrl :"editassessment.html",
-             	 controller:"assessmentCntrl"
-            })
-             .when("/Studentdetails/viewstudent", {
-              templateUrl :"viewstudent.html",
-             	 controller:"StudentCntrl"
-            })
-          
-        });
-
+    };
+});

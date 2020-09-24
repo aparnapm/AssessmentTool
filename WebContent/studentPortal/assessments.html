@@ -1,0 +1,69 @@
+<div class="container" style="padding:5%!important;" data-ng-init="getStudentAssessments()">	
+	<div id="student_assessments_availableTable" class="container" align="center">
+		<div id="student_availableAssessments_errorMessage" data-ng-if="errorMessage" data-ng-model="errorMessage" style="color: red!important;">{{errorMessage}}</div>
+		<div id="student_availableAssessments_successMessage" data-ng-if="successMessage" data-ng-model="successMessage" style="color: green!important;">{{successMessage}}</div>
+		<p class="h2" style="margin-bottom:20px!important;">Available Assessments</p>
+		<p align="right"><input type="text" data-ng-model="search" style="padding-left: 10px; padding-right: 10px" placeholder="Search..."></p>
+		<table class="table table-hover table-bordered">
+			<thead class="thead-light">
+				<tr>
+					<th data-ng-click="orderByMe('assessment.id', 1)" scope="col">ID</th>
+					<th data-ng-click="orderByMe('assessment.assessmentName', 1)" scope="col">Assessment Name</th>
+					<th data-ng-click="orderByMe('assessment.qcount', 1)" scope="col">Number of Questions</th>
+					<th data-ng-click="orderByMe('attempts', 1)" scope="col">Attempts</th>
+					<th data-ng-click="orderByMe('assessment.timeLimit', 1)" scope="col">Time Limit</th>
+					<th data-ng-click="orderByMe('validFrom', 1)" scope="col">Start Date</th>
+					<th data-ng-click="orderByMe('validUntil', 1)" scope="col">End Date</th>
+					<th scope="col">Take Assessment</th>
+					<th scope="col">Results</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr data-ng-repeat="x in availableAssessments | orderBy: tableOneOrder | filter: search">
+					<td>{{x.assessment.id}}</td>
+			        <td>{{x.assessment.assessmentName}}</td>
+			        <td>{{x.assessment.qcount}}</td>
+			        <td>{{x.attempts}}</td>
+			        <td>{{timeToStrShort(x.assessment.timeLimit)}}</td>
+			        <td>{{x.validFrom}}</td>
+			        <td>{{x.validUntil}}</td>
+			        <td>
+			        	<button class="btn btn-success btn-sm" data-ng-show="x.stat=='approved'" data-ng-click="prepareQuiz(x.assessment.id, x.id)">GO</button>
+			        	<button class="btn btn-info btn-sm" data-ng-show="x.stat=='requested'" data-ng-disabled="true">Requested</button>
+			        </td>
+			        <td>
+			        	<button class="btn btn-info btn-sm" data-ng-show="x.attempts < x.assessment.attempts" data-ng-click="getEnrollmentResult(x.id, x.score, x.assessment.qcount)">VIEW</button>
+			        </td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	
+	<div id="student_assessments_unavailableTable" class="container" align="center">
+		<div id="student_unavailableAssessments_errorMessage" data-ng-if="errorMessage2" data-ng-model="errorMessage2" style="color: red!important;">{{errorMessage2}}</div>
+		<p class="h2" style="margin-bottom:20px!important;">Completed Assessments</p>
+		<table class="table table-hover table-bordered">
+			<thead class="thead-light">
+				<tr>
+					<th data-ng-click="orderByMe('assessment.id', 2)" scope="col">ID</th>
+					<th data-ng-click="orderByMe('assessment.assessmentName', 2)" scope="col">Assessment Name</th>
+					<th data-ng-click="orderByMe('assessment.description', 2)" scope="col">Description</th>
+					<th data-ng-click="orderByMe('assessment.qcount', 2)" scope="col">Number of Questions</th>
+					<th scope="col">View Results</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr data-ng-repeat="x in unavailableAssessments | orderBy: tableTwoOrder | filter: search">
+					<td>{{x.assessment.id}}</td>
+			        <td>{{x.assessment.assessmentName}}</td>
+			        <td>{{x.assessment.description}}</td>
+			        <td>{{x.assessment.qcount}}</td>
+			        <td>
+			        	<button class="btn btn-info btn-sm" data-ng-show="x.attempts < x.assessment.attempts" data-ng-click="getEnrollmentResult(x.id, x.score, x.assessment.qcount)">VIEW</button>
+			        	<button class="btn btn-danger btn-sm" data-ng-hide="x.attempts < x.assessment.attempts" data-ng-disabled="true">No scores available.</button>
+			        </td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

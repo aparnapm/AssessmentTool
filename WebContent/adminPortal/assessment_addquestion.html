@@ -1,0 +1,31 @@
+<div class="container" style="padding:5%!important;" data-ng-init="getAllQuestions()">
+	<div id="admin_addquestion_allTable" data-ng-show="questiondetails" class="container" align="center">
+		<div id="admin_addquestion_errorMessage" data-ng-if="errorMessage" data-ng-model="errorMessage" style="color: red!important;">{{errorMessage}}</div>
+		<div id="admin_addquestion_successMessage" data-ng-if="successMessage" data-ng-model="successMessage" style="color: green!important;">{{successMessage}}</div>
+		<p class="h2" style="margin-bottom:20px!important;">Add Questions to Assessment {{thisassessment.id}}: {{thisassessment.assessmentName}}</p>
+		<p align="right"><input type="text" data-ng-model="search" style="padding-left: 10px; padding-right: 10px" placeholder="Search..."></p>
+		<table class="table table-hover table-bordered">
+			<thead class="thead-light">
+				<tr>
+					<th data-ng-click="orderByMe('id')" scope="col">ID</th>
+					<th data-ng-click="orderByMe('ques')" scope="col">Question</th>
+					<th data-ng-click="orderByMe('category')" scope="col">Category</th>
+					<th data-ng-click="orderByMe('difficulty')" scope="col">Difficulty</th>
+					<th scope="col">Add Question</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr data-ng-repeat="x in questiondetails | orderBy: myOrder | filter: search">
+					<td>{{x.id}}</td>
+					<td>{{x.ques}}</td>
+					<td>{{x.category}}</td>
+					<td>{{x.difficulty}}</td>
+					<td>
+						<button class="btn btn-success btn-sm" data-ng-hide="checkIfAdded(x)" data-ng-click="addQuestionToAssessment(thisassessment.id, x.id)">ADD</button>
+						<button class="btn btn-info btn-sm" data-ng-show="checkIfAdded(x)" data-ng-disabled="true">Added</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

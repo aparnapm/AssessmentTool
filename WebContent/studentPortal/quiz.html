@@ -1,0 +1,38 @@
+<div class="container" align="center" style="padding:5%!important;">
+	<p class="h2" style="margin-bottom:20px!important;">{{currentAssessment.assessmentName}}</p>
+	<div class="container" align="center" id="student_quizmodal_quizStart">
+		<table class="table table-hover table-striped">
+			<tr>
+				<th>ID</th>
+				<td>{{currentAssessment.id}}</td>
+			</tr>
+			<tr>
+				<th>Name</th>
+				<td>{{currentAssessment.assessmentName}}</td>
+			</tr>
+			<tr>
+				<th>Description</th>
+				<td>{{currentAssessment.description}}</td>
+			</tr>
+			<tr>
+				<th>Category</th>
+				<td>{{currentAssessment.category}}</td>
+			</tr>
+			<tr>
+				<th>Difficulty</th>
+				<td>{{currentAssessment.difficulty}}</td>
+			</tr>
+			<tr>
+				<th>Number of Questions</th>
+				<td>{{currentAssessment.qcount}}</td>
+			</tr>
+			<tr>
+				<th>Time Limit</th>
+				<td>{{timeStrDisplay}}</td>
+			</tr>
+		</table>
+		<br></br>
+		<p class="h4" style="margin-bottom:20px!important;">Begin Your Assessment</p>
+		<button type="button" class="btn btn-primary btn-lg" data-ng-click="modalOpen()">START</button>
+	</div>
+</div>

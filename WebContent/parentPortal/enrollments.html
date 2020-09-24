@@ -1,0 +1,43 @@
+<div class="container" style="padding:5%!important;" data-ng-init="getAllEnrollments()">	
+	<div id="parent_enrollments_allTable" class="container" align="center">
+		<div id="parent_enrollments_errorMessage" data-ng-if="errorMessage" data-ng-model="errorMessage" style="color: red!important;">{{errorMessage}}</div>
+		<div id="parent_enrollments_successMessage" data-ng-if="successMessage" data-ng-model="successMessage" style="color: green!important;">{{successMessage}}</div>
+		<p class="h2" style="margin-bottom:20px!important;">Enrollments</p>
+		<p align="right"><input type="text" data-ng-model="search" style="padding-left: 10px; padding-right: 10px" placeholder="Search..."></p>
+		<table class="table table-hover table-bordered">
+			<thead class="thead-light">
+				<tr>
+					<th data-ng-click="orderByMe('id')" scope="col">ID</th>
+					<th data-ng-click="orderByMe('assessment.assessmentName')" scope="col">Assessment</th>
+					<th data-ng-click="orderByMe('student.firstName')" scope="col">Student</th>
+					<th data-ng-click="orderByMe('validFrom')" scope="col">Start Date</th>
+					<th data-ng-click="orderByMe('validUntil')" scope="col">End Date</th>
+					<th data-ng-click="orderByMe('stat')" scope="col">Status</th>
+					<th scope="col">Results</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr data-ng-repeat="x in enrollmentdetails | orderBy: myOrder | filter: search">
+					<td>{{x.id}}</td>
+					<td>{{x.assessment.assessmentName}}</td>
+					<td><button class="btn btn-primary btn-sm" data-ng-click="editStudent(x.student.id)">{{x.student.firstName}} {{x.student.lastName}}</button></td>
+					<td>{{x.validFrom}}</td>
+					<td>{{x.validUntil}}</td>
+					<td>
+						<p data-ng-show="x.stat=='requested'">Requested</p>
+						<p data-ng-show="x.stat=='approved'">Approved</p>
+						<p data-ng-show="x.stat=='rejected'">Rejected</p>
+						<p data-ng-show="x.stat=='complete'">Complete</p>
+						<p data-ng-show="x.stat=='incomplete'">Incomplete</p>
+					</td>
+					<td>
+						<button class="btn btn-info btn-sm" data-ng-show="x.attempts<x.assessment.attempts" data-ng-click="viewResult(x.id)">View Results</button>
+						<button class="btn btn-secondary btn-sm" data-ng-hide="x.attempts<x.assessment.attempts" data-ng-disabled="true">No Result Available</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<br></br>
+		<button class="btn btn-primary btn-block" data-ng-click="initEnrollment()">Create Enrollment</button>
+	</div>
+</div>

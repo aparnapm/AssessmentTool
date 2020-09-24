@@ -1,0 +1,52 @@
+<div class="container" style="padding:5%!important;">	
+	<div id="admin_parentedit_editForm" data-ng-submit="updateParent(thisparent)" style="padding-left:5%!important; padding-right:5%!important;">
+		<p class="h2" style="margin-bottom:20px!important;">Edit Parent {{thisparent.id}}</p>
+		<div id="admin_parentedit_errorMessage" data-ng-if="errorMessage" data-ng-model="errorMessage" style="color: red!important;">{{errorMessage}}</div>
+		<div id="admin_parentedit_successMessage" data-ng-if="successMessage" data-ng-model="successMessage" style="color: green!important;">{{successMessage}}</div>
+		<form name="parent_edit" id="parent_edit_form">
+			<div class="form-group row">
+				<label class="control-label col-sm-2" style="font-size: 15px!important;" for="parent_firstname">First Name</label>
+				<div class="col-sm-10">
+					<input name="parent_firstname" class="form-control" type="text" data-ng-model="thisparent.firstName" required></input>
+					<span data-ng-show="parent_edit.parent_firstname.$touched && parent_edit.parent_firstname.$invalid">First Name cannot be empty.</span>
+				</div>
+			</div>
+			<div class="form-group row">
+				<label class="control-label col-sm-2" style="font-size: 15px!important;" for="parent_lastname">Last Name</label>
+				<div class="col-sm-10">
+					<input name="parent_lastname" class="form-control" type="text" data-ng-model="thisparent.lastName" required></input>
+					<span data-ng-show="parent_edit.parent_lastname.$touched && parent_edit.parent_lastname.$invalid">Last Name cannot be empty.</span>
+				</div>
+			</div>
+			<div class="form-group row">
+				<label class="control-label col-sm-2" style="font-size: 15px!important;" for="parent_email">Email</label>
+				<div class="col-sm-10">
+					<input name="parent_email" class="form-control" type="email" data-ng-model="thisparent.email" readonly></input>
+				</div>
+			</div>
+			<div class="form-group row">
+				<label class="control-label col-sm-2" style="font-size: 15px!important;" for="parent_phone">Phone</label>
+				<div class="col-sm-10">
+					<input name="parent_phone" class="form-control" type="text" data-ng-model="thisparent.phone" data-ng-pattern="/^(\+91[\-\s]?)?[0]?(91)?[789]\d{9}$/"></input>
+					<span data-ng-show="parent_edit.parent_phone.$touched && parent_edit.parent_phone.$invalid">Phone number is not valid.</span>
+				</div>
+			</div>
+			<div class="form-group row">
+                <label class="control-label col-sm-2" style="font-size: 15px!important;" for="parent_location">Location</label>
+                <div class="col-sm-10">
+                    <input name="parent_location" class="form-control" type="text" data-ng-model="thisparent.location"></input>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="control-label col-sm-2" style="font-size: 15px!important;" for="parent_dob">Date of Birth</label>
+                <div class="col-sm-10">
+                    <input name="parent_dob" class="form-control" type="date" data-ng-model="thisparent.dob"></input>
+                </div>
+            </div>
+            <div align="center" class="form-group row">
+				<button id="edit_parent_submitbtn" type="submit" class="btn btn-success">Save</button>
+				<button id="delete_parent_btn" class="btn btn-danger" data-ng-click="deleteParent(thisparent.id)">Delete</button>
+			</div>
+		</form>
+	</div>
+</div>

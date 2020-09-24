@@ -1,0 +1,39 @@
+<div class="container" align="center" style="padding:5%!important;">
+	<p class="h2" style="margin-bottom:20px!important;">{{currentAssessment.assessmentName}} Results</p>
+	<div class="container" align="center" id="student_quizresult_resultTable">
+		<table class="table table-hover table-striped">
+			<tr>
+				<th>Assessment Name</th>
+				<td>{{currentAssessment.assessmentName}}</td>
+			</tr>
+			<tr>
+				<th>Description</th>
+				<td>{{currentAssessment.description}}</td>
+			</tr>
+			<tr>
+				<th>Category</th>
+				<td>{{currentAssessment.category}}</td>
+			</tr>
+			<tr>
+				<th>Difficulty</th>
+				<td>{{currentAssessment.difficulty}}</td>
+			</tr>
+			<tr>
+				<th>Time Taken</th>
+				<td>{{timeStr}}</td>
+			</tr>
+			<tr>
+				<th>Your Score</th>
+				<td>{{thisresult.score}}/{{currentAssessment.qcount}} = {{percentage}}%</td>
+			</tr>
+			<tr>
+				<th>Highest Score</th>
+				<td>{{currentEnrollment.score}}/{{currentAssessment.qcount}} = {{highestPercentage}}%</td>
+			</tr>
+			<tr>
+				<th>Attempts Left</th>
+				<td>{{currentEnrollment.attempts}}</td>
+			</tr>
+		</table>
+	</div>
+</div>

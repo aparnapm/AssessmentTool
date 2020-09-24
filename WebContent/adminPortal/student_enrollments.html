@@ -1,0 +1,33 @@
+<div class="container" style="padding:5%!important;">	
+	<div id="admin_studentenrollments_allTable" class="container" align="center">
+		<div id="admin_studentenrollments_errorMessage" data-ng-if="errorMessage" data-ng-model="errorMessage" style="color: red!important;">{{errorMessage}}</div>
+		<p class="h2" style="margin-bottom:20px!important;">Enrollments for Student {{thisstudent.id}}: {{thisstudent.firstName}} {{thisstudent.lastName}}</p>
+		<p align="right"><input type="text" data-ng-model="search" style="padding-left: 10px; padding-right: 10px" placeholder="Search..."></p>
+		<table class="table table-hover table-bordered">
+			<thead class="thead-light">
+				<tr>
+					<th data-ng-click="orderByMe('id')" scope="col">ID</th>
+					<th data-ng-click="orderByMe('assessment.assessmentName')" scope="col">Assessment</th>
+					<th data-ng-click="orderByMe('validFrom')" scope="col">Valid From</th>
+					<th data-ng-click="orderByMe('validUntil')" scope="col">Valid Until</th>
+					<th scope="col">Status</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr data-ng-repeat="x in enrollmentdetails | orderBy: myOrder | filter: search">
+					<td>{{x.id}}</td>
+					<td><button class="btn btn-primary btn-sm" data-ng-click="viewAssessment(x.assessment.id)">{{x.assessment.assessmentName}}</button></td>
+					<td>{{x.validFrom}}</td>
+					<td>{{x.validUntil}}</td>
+					<td>
+						<button class="btn btn-info btn-sm" data-ng-click="viewEnrollment(x.id)">VIEW</button>
+						<button class="btn btn-success btn-sm" data-ng-show="x.stat=='requested'" data-ng-click="approveEnrollment(x.id, x)">Approve</button>
+						<button class="btn btn-danger btn-sm" data-ng-show="x.stat=='requested'" data-ng-click="rejectEnrollment(x.id, x)">Reject</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<br></br>
+		<button class="btn btn-primary btn-block" data-ng-click="initEnrollment(1)">Create Enrollment</button>
+	</div>
+</div>

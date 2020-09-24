@@ -1,0 +1,80 @@
+<div class="container" style="padding:5%!important;">	
+	<div id="admin_questionedit_editForm" data-ng-submit="updateQuestion(thisquestion)" style="padding-left:5%!important; padding-right:5%!important;">
+		<p class="h2" style="margin-bottom:20px!important;">Edit Question</p>
+		<div id="admin_questionedit_errorMessage" data-ng-if="errorMessage" data-ng-model="errorMessage" style="color: red!important;">{{errorMessage}}</div>
+		<div id="admin_questionedit_successMessage" data-ng-if="successMessage" data-ng-model="successMessage" style="color: green!important;">{{successMessage}}</div>
+		<form name="question_edit" id="question_edit_form">
+			<div class="form-group">
+				<label for="question_ques" style="font-size: 15px!important;">Question</label>
+				<textarea name="question_ques" class="form-control rounded-0" rows="3" data-ng-model="thisquestion.ques" required></textarea>
+				<span data-ng-show="question_edit.question_ques.$touched && question_edit.question_ques.$invalid">Question cannot be empty</span>
+			</div>
+			<div class="form-group row">
+				<label class="control-label col-sm-2" style="font-size: 15px!important;" for="question_opta">A.</label>
+				<div class="col-sm-10">
+					<input name="question_opta" class="form-control" type="text" data-ng-model="thisquestion.opta" required></input>
+					<span data-ng-show="question_edit.question_opta.$touched && question_edit.question_opta.$invalid">At least two options are required.</span>
+				</div>
+			</div>
+			<div class="form-group row">
+				<label class="control-label col-sm-2" style="font-size: 15px!important;" for="question_optb">B.</label>
+				<div class="col-sm-10">
+					<input name="question_optb" class="form-control" type="text" data-ng-model="thisquestion.optb" required></input>
+					<span data-ng-show="question_edit.question_optb.$touched && question_edit.question_optb.$invalid">At least two options are required.</span>
+				</div>
+			</div>
+			<div class="form-group row">
+				<label class="control-label col-sm-2" style="font-size: 15px!important;" for="question_optc">C.</label>
+				<div class="col-sm-10">
+					<input name="question_optc" class="form-control" type="text" data-ng-model="thisquestion.optc"></input>
+				</div>
+			</div>
+			<div class="form-group row">
+				<label class="control-label col-sm-2" style="font-size: 15px!important;" for="question_optd">D.</label>
+				<div class="col-sm-10">
+					<input name="question_optd" class="form-control" type="text" data-ng-model="thisquestion.optd"></input>
+				</div>
+			</div>
+			<div class="form-group row">
+				<label class="control-label col-sm-2" style="font-size: 15px!important;" for="question_answer">Answer</label>
+				<div class="col-sm-10">
+					<select name="question_answer" class="form-control form-control-sm" data-ng-model="thisquestion.answer" required>
+	      				<option value='a'>a</option>
+	      				<option value='b'>b</option>
+	      				<option value='c'>c</option>
+	      				<option value='d'>d</option>
+	   			 	</select>
+	   			 	<span data-ng-show="thisquestion.answer=='c' && thisquestion.optc==''">Answer c is empty.</span>
+	   			 	<span data-ng-show="thisquestion.answer=='d' && thisquestion.optd==''">Answer d is empty.</span>
+	   			 	<span data-ng-show="question_edit.question_answer.$touched && question_edit.question_answer.$invalid">An Answer is required.</span>
+	   			 </div>
+			</div>
+			<div class="form-group row">
+				<label class="control-label col-sm-2" style="font-size: 15px!important;" for="question_category">Category</label>
+				<div class="col-sm-10">
+					<select id="question_category" class="form-control" data-ng-model="thisquestion.category" required>
+	      				<option value='EQ'>EQ</option>
+	      				<option value='IQ'>IQ</option>
+	   			 	</select>
+	   			 	<span data-ng-show="question_edit.question_category.$touched && question_edit.question_category.$invalid">A Category is required</span>
+				</div>
+			</div>
+			<div class="form-group row">
+				<label class="control-label col-sm-2" for="question_difficulty">Difficulty</label>
+				<div class="col-sm-10">
+					<select id="question_difficulty" class="form-control" data-ng-model="thisquestion.difficulty" required>
+	      				<option value="easy">Easy</option>
+	      				<option value="medium">Medium</option>
+	      				<option value="hard">Hard</option>
+	   			 	</select>
+	   			 	<span data-ng-show="question_edit.question_difficulty.$touched && question_edit.question_difficulty.$invalid">A Difficulty is required</span>
+				</div>
+			</div>
+			
+			<div align="center" class="form-group row">
+				<button id="edit_question_submitbtn" type="submit" class="btn btn-success">Save</button>
+				<button id="delete_question_btn" class="btn btn-danger" data-ng-click="deleteQuestion(thisquestioon.id)">Delete</button>
+			</div>
+		</form>
+	</div>
+</div>

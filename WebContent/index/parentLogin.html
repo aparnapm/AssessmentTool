@@ -1,0 +1,18 @@
+<div class="container" style="padding:5%!important">
+	<div id="parentlogin" class="container" data-ng-init="getLogin('parent')" data-ng-submit="parentLogin(parentdetails)" style="padding-left:10%!important; padding-right:10%!important;">
+		<p class="h2" style="margin-bottom:20px!important;">Login to Parent Portal</p>
+		<div id="index_parentlogin_errorMessage" data-ng-if="errorMessage" data-ng-model="errorMessage" style="color: red!important;">{{errorMessage}}</div>
+		<div id="index_parentlogin_successMessage" data-ng-if="successMessage" data-ng-model="successMessage" style="color: green!important;">{{successMessage}}</div>
+		<form id="parentUser_login">
+			<div class="form-group">
+				<label for="parent_email" style="font-size: 15px!important;">Email</label> 
+				<input id="parent_email" class="form-control" type="email" data-ng-model="parentdetails.email" required></input>
+			</div>
+			<div class="form-group">
+				<label for="parent_passw" style="font-size: 15px!important;">Password</label> 
+				<input id="parent_passw" class="form-control" type="password" data-ng-model="parentdetails.passw" required></input>
+			</div>
+			<button type="submit" class="btn btn-primary">Login</button>
+		</form>
+	</div>
+</div>

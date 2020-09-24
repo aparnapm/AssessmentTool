@@ -1,0 +1,90 @@
+<div class="container" style="padding:5%!important;">
+	<div id="admin_assessmentdetails_detailTable" align="center" style="padding-left:5%!important; padding-right:5%!important;">
+		<p class="h2" style="margin-bottom:20px!important;">Assessment Details</p>
+		<div id="admin_assessmentdetails_errorMessage" data-ng-if="errorMessage" data-ng-model="errorMessage" style="color: red!important;">{{errorMessage}}</div>
+		<table class="table table-hover table-striped">
+			<tr>
+				<th>ID</th>
+				<td>{{thisassessment.id}}</td>
+			</tr>
+			<tr>
+				<th>Name</th>
+				<td>{{thisassessment.assessmentName}}</td>
+			</tr>
+			<tr>
+				<th>Description</th>
+				<td>{{thisassessment.description}}</td>
+			</tr>
+			<tr>
+				<th>Category</th>
+				<td>{{thisassessment.category}}</td>
+			</tr>
+			<tr>
+				<th>Difficulty</th>
+				<td>{{thisassessment.difficulty}}</td>
+			</tr>
+			<tr>
+				<th>Number of Questions</th>
+				<td>{{thisassessment.qcount}}</td>
+			</tr>
+			<tr>
+				<th>Attempts</th>
+				<td>{{thisassessment.attempts}}</td>
+			</tr>
+			<tr>
+				<th>Time Limit</th>
+				<td>{{timeStr}}</td>
+			</tr>
+			<tr>
+				<th>Created By</th>
+				<td>Admin {{thisassessment.createdby}}</td>
+			</tr>
+			<tr>
+				<th>Created Date</th>
+				<td>{{thisassessment.createdDate}}</td>
+			</tr>
+			<tr>
+				<th>Modified Date</th>
+				<td>{{thisassessment.modifiedDate}}</td>
+			</tr>
+		</table>
+	</div>
+	
+	<div id="admin_assessmentdetails_questionsTable" align="center">
+		<p class="h2" style="margin-bottom:20px!important;">Questions</p>
+		<div id="admin_assessmentdetails_errorMessage2" data-ng-if="errorMessage2" data-ng-model="errorMessage2" style="color: red!important; padding:5%!important;">{{errorMessage2}}</div>
+		<div id="admin_assessmentdetails_successMessage" data-ng-if="successMessage" data-ng-model="successMessage" style="color: green!important; padding:5%!important;">{{successMessage}}</div>
+		<p align="right"><input type="text" data-ng-model="search" style="padding-left: 10px; padding-right: 10px" placeholder="Search..."></p>
+		<table class="table table-hover table-bordered">
+			<thead class="thead-light">
+				<tr>
+					<th data-ng-click="orderByMe('id')" scope="col">ID</th>
+					<th data-ng-click="orderByMe('ques')" scope="col">Question</th>
+					<th data-ng-click="orderByMe('category')" scope="col">Category</th>
+					<th data-ng-click="orderByMe('difficulty')" scope="col">Difficulty</th>
+					<th data-ng-click="orderByMe('createdby')" scope="col">Created By</th>
+					<th scope="col">Manage</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr data-ng-repeat="x in assessmentquestions | orderBy: myOrder | filter: search">
+					<td>{{x.id}}</td>
+					<td>{{x.ques}}</td>
+					<td>{{x.category}}</td>
+					<td>{{x.difficulty}}</td>
+					<td>Admin {{x.createdby}}</td>
+					<td>
+						<button class="btn btn-danger btn-sm" data-ng-click="deleteQuestionFromAssessment(thisassessment.id, x.id, x)">DELETE</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<button class="btn btn-primary" data-ng-click="navigate('#!assessment/addquestion')">Add Question</button>
+		<br></br>		
+	</div>
+	
+	<div id="admin_assessmentdetails_viewEnrollmentbtn" data-ng-show="thisassessment" align="center" style="padding:5%!important;">
+		<button class="btn btn-primary btn-block" data-ng-click="viewAssessmentEnrollments(thisassessment.id)">View Enrollments</button>
+	</div>
+
+</div>

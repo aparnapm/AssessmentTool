@@ -1,0 +1,32 @@
+<div id="contactus" class="container" data-ng-submit="contactUs(contact)" style="padding-left:10%!important; padding-right:10%!important;">
+	<br></br>
+	<p class="h2" style="margin-bottom:20px!important;">Contact Us!</p>
+	<div id="index_contact_errorMessage" data-ng-if="errorMessage" data-ng-model="errorMessage" style="color: red!important;">{{errorMessage}}</div>
+	<form id="contact_form" class="form-horizontal">
+		<div class="form-group row">
+			<label class="control-label col-sm-2" for="contact_name" style="font-size: 20px!important;">Name</label>
+			<div class="col-sm-10">
+				<input id="contact_name" class="form-control" type="text" data-ng-model="contact.name" required></input>
+			</div>
+		</div>
+		<div class="form-group row">
+			<label class="control-label col-sm-2" for="contact_email" style="font-size: 20px!important;">Email</label>
+			<div class="col-sm-10">
+				<input id="contact_email" class="form-control" type="text" data-ng-model="contact.email" required></input>
+			</div>
+		</div>
+		<div class="form-group row">
+			<label class="control-label col-sm-2" for="contact_desc" style="font-size: 20px!important;">Thoughts?</label>
+			<div class="col-sm-10">
+				<textarea id="contact_desc" class="form-control" data-ng-model="contact.desc" required></textarea>
+			</div>
+		</div>
+		<div class="form-group row">
+			<div class="col-sm-2"></div>
+			<div class="col-sm-10">
+			<button type="submit" class="btn btn-primary btn-block">Send</button>
+			</div>
+		</div>
+	</form>
+	<br></br>
+</div>

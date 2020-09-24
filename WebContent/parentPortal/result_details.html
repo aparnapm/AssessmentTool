@@ -1,0 +1,31 @@
+<div class="container" align="center" style="padding:5%!important;">
+	<p class="h2" style="margin-bottom:20px!important;">Enrollment {{thisresult.enrollment.id}} Results</p>
+	<div class="container" align="center" id="parent_resultdetails_resultTable">
+		<table class="table table-hover table-striped">
+			<tr>
+				<th>Assessment Name</th>
+				<td>{{thisresult.enrollment.assessment.assessmentName}}</td>
+			</tr>
+			<tr>
+				<th>Description</th>
+				<td>{{thisresult.enrollment.assessment.description}}</td>
+			</tr>
+			<tr>
+				<th>Category</th>
+				<td>{{thisresult.enrollment.assessment.category}}</td>
+			</tr>
+			<tr>
+				<th>Difficulty</th>
+				<td>{{thisresult.enrollment.assessment.category}}</td>
+			</tr>
+			<tr>
+				<th>Time Taken</th>
+				<td>{{timeStr}}</td>
+			</tr>
+			<tr>
+				<th>Score</th>
+				<td>{{thisresult.score}}/{{thisresult.enrollment.assessment.qcount}} = {{percentage}}%</td>
+			</tr>
+		</table>
+	</div>
+</div>

@@ -1,8 +1,5 @@
 package com.tratumtech.edugreat.service;
 
-import java.io.IOException;
-import java.util.HashSet;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -15,24 +12,16 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.codehaus.jackson.JsonGenerationException;
-import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.annotate.JsonSerialize;
-import org.codehaus.jettison.json.JSONArray;
-import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
-import com.tratumtech.edugreat.tool.Enrollment;
-import com.tratumtech.edugreat.tool.EnrollmentHome;
-
+import com.tratumtech.edugreat.model.EnrollmentHome;
 
 @Path("enrollment/")
 public class EnrollmentService {
-
+	
 	@Context
 	private HttpServletRequest request;
-
+	
 	public HttpServletRequest getRequest() {
 		return request;
 	}
@@ -41,217 +30,135 @@ public class EnrollmentService {
 		this.request = request;
 	}
 
-
-
 	@GET
 	@Path("all")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllEnrollment() {
-		JSONArray joAllEnrollment = new JSONArray();
-		HashSet<Enrollment> emptySet = null;
-
+		JSONObject jo = new JSONObject();
 		try {
-			EnrollmentHome objAH = new EnrollmentHome();
-			emptySet = objAH.getAllEnrollment();
-
-			if(emptySet != null && !emptySet.isEmpty()){
-				ObjectMapper mapper = new ObjectMapper();	
-				mapper.setSerializationInclusion(JsonSerialize.Inclusion.NON_NULL);
-				joAllEnrollment = new JSONArray(mapper.writeValueAsString(emptySet));
-			}
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
+			EnrollmentHome objEH = new EnrollmentHome();
+			jo = objEH.getAllEnrollment();
+		} catch (Exception e) {
 			e.printStackTrace();
-		} catch (JsonGenerationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return Response.ok(joAllEnrollment).header("Access-Control-Allow-Origin","*").build();		
+		} 
+		return Response.ok(jo).header("Access-Control-Allow-Origin", "*").build();		
 	}
-
-	// working
 
 	@GET
 	@Path("{id}")
 	@Produces(MediaType.APPLICATION_JSON)	
-	public JSONObject GetEnrollmentById(@PathParam("id") int id){
-		Enrollment objEnrollment = null;
+	public Response getEnrollmentById(@PathParam("id") int id){
 		JSONObject jo = new JSONObject();		
 		try{
-			EnrollmentHome objAH = new EnrollmentHome();
-			objEnrollment = objAH.GetEnrollmentById(id);
-
-			if(objEnrollment != null){
-				ObjectMapper mapper = new ObjectMapper();	
-				mapper.setSerializationInclusion(JsonSerialize.Inclusion.NON_NULL);
-				jo = new JSONObject(mapper.writeValueAsString(objEnrollment));
-			}
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
+			EnrollmentHome objEH = new EnrollmentHome();
+			jo = objEH.getEnrollmentById(id);
+		} catch (Exception e) {
 			e.printStackTrace();
-		} catch (JsonGenerationException e) {
-			// TODO Auto-generated catch block
+		} 
+		return Response.ok(jo).header("Access-Control-Allow-Origin", "*").build();
+	}
+	
+	@GET
+	@Path("student/{id}")
+	@Produces(MediaType.APPLICATION_JSON)	
+	public Response getEnrollmentByStudent(@PathParam("id") int id){
+		JSONObject jo = new JSONObject();
+		try {
+			EnrollmentHome objEH = new EnrollmentHome();
+			jo = objEH.getEnrollmentByStudent(id);
+		} catch (Exception e) {
 			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return jo;
+		} 
+		return Response.ok(jo).header("Access-Control-Allow-Origin", "*").build();
 	}
 
+	@GET
+	@Path("assessment/{id}")
+	@Produces(MediaType.APPLICATION_JSON)	
+	public Response getEnrollmentByAssessment(@PathParam("id") int id){
+		JSONObject jo = new JSONObject();
+		
+		try {
+			EnrollmentHome objEH = new EnrollmentHome();
+			jo = objEH.getEnrollmentByAssessment(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+		return Response.ok(jo).header("Access-Control-Allow-Origin", "*").build();
+	}
+	
+	@GET
+	@Path("student/available/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAvailableEnrollmentOfStudent(@PathParam("id") int id) {
+		JSONObject jo = new JSONObject();
+		try {
+			EnrollmentHome objEH = new EnrollmentHome();
+			jo = objEH.getAvailableEnrollmentOfStudent(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+		return Response.ok(jo).header("Access-Control-Allow-Origin", "*").build();
+	}
+	
+	@GET
+	@Path("student/unavailable/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getInavailableEnrollmentOfStudent(@PathParam("id") int id) {
+		JSONObject jo = new JSONObject();
+		try {
+			EnrollmentHome objEH = new EnrollmentHome();
+			jo = objEH.getUnavailableEnrollmentOfStudent(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+		return Response.ok(jo).header("Access-Control-Allow-Origin", "*").build();
+	}
+	
 	@POST
 	@Path("add")
 	@Produces(MediaType.APPLICATION_JSON)	
-	public JSONObject addEnrollment(String data){
-
-		JSONObject jo = null;
-		int adminId = 0;
+	public Response addEnrollment(String data){
+		JSONObject jo = new JSONObject();
 		try {
-
-			EnrollmentHome AH = new EnrollmentHome();
-			adminId = AH.addEnrollment(data);
-			jo = new JSONObject();
-			jo.put("id", adminId);
-
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
+			EnrollmentHome EH = new EnrollmentHome();
+			jo = EH.addEnrollment(data);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return jo;
+		return Response.ok(jo).header("Access-Control-Allow-Origin", "*")
+				.header("Access-Control-Allow-Methods", "POST, GET, PUT, UPDATE, DELETE, OPTIONS").build();
 	}
-
-
-
-
+	
 	@PUT
 	@Path("update")
 	@Produces(MediaType.APPLICATION_JSON)	
-	public JSONObject updateEnrollment(String data){
-		JSONObject jo = null;
+	public Response updateEnrollment(String data){
+		JSONObject jo = new JSONObject();
 		try{
-			EnrollmentHome objAH = new EnrollmentHome();
-			jo = objAH.updateEnrollment(data);
-		}catch (Exception e)
-		{e.printStackTrace();
-		}return jo;
+			EnrollmentHome objEH = new EnrollmentHome();
+			jo = objEH.updateEnrollment(data);
+		}catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return Response.ok(jo).header("Access-Control-Allow-Origin", "*")
+				.header("Access-Control-Allow-Methods", "POST, GET, PUT, UPDATE, DELETE, OPTIONS").build();
 	}
-
+	
 	@DELETE
-	@Path("delete/{id}")
-	@Produces(MediaType.APPLICATION_JSON)	
-	public Response deleteEnrollment(@PathParam("id") int id){
-		JSONObject jo = null;
-		try{
-			EnrollmentHome objAH = new EnrollmentHome();
-			jo = objAH.deleteEnrollment(id);
-		}catch (Exception e)
-		{e.printStackTrace();
+	@Path("delete")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response deleteEnrollment(String data) {
+		JSONObject jo = new JSONObject();
+		try {
+			EnrollmentHome objEH = new EnrollmentHome();
+			jo = objEH.deleteEnrollment(data);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		return Response.ok(jo).header("Access-Control-Allow-Origin","*").build();	
+		return Response.ok(jo).header("Access-Control-Allow-Origin", "*")
+				.header("Access-Control-Allow-Methods", "POST, GET, PUT, UPDATE, DELETE, OPTIONS").build();
 	}
-@GET
-@Path("assessment_id/{assessment_id}")
-@Produces(MediaType.APPLICATION_JSON)
-public JSONArray GetEnrollmentByAssessment(@PathParam("assessment_id") int a_id) {
-	JSONArray joEnrollmentOfAssessment = new JSONArray();
-	HashSet<Enrollment> emptySet = null;
-	
-	try {
-		EnrollmentHome objSH = new EnrollmentHome();
-		emptySet = objSH.getEnrollmentByAssessment(a_id);
-		
-		if(emptySet != null && !emptySet.isEmpty()){
-			ObjectMapper mapper = new ObjectMapper();	
-			mapper.setSerializationInclusion(JsonSerialize.Inclusion.NON_NULL);
-			joEnrollmentOfAssessment = new JSONArray(mapper.writeValueAsString(emptySet));
-		}
-	} catch (JSONException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	} catch (JsonGenerationException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	} catch (JsonMappingException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	} catch (IOException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
-	
-	return joEnrollmentOfAssessment;		
-}
 
-@GET
-@Path("student_id/{student_id}")
-@Produces(MediaType.APPLICATION_JSON)
-public JSONArray GetEnrollmentByStudent(@PathParam("student_id") int s_id) {
-	JSONArray joEnrollmentOfStudent = new JSONArray();
-	HashSet<Enrollment> emptySet = null;
-	
-	try {
-		EnrollmentHome objSH = new EnrollmentHome();
-		emptySet = objSH.getEnrollmentByStudent(s_id);
-		
-		if(emptySet != null && !emptySet.isEmpty()){
-			ObjectMapper mapper = new ObjectMapper();	
-			mapper.setSerializationInclusion(JsonSerialize.Inclusion.NON_NULL);
-			joEnrollmentOfStudent = new JSONArray(mapper.writeValueAsString(emptySet));
-		}
-	} catch (JSONException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	} catch (JsonGenerationException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	} catch (JsonMappingException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	} catch (IOException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
-	
-	return joEnrollmentOfStudent;
-}
-
-@GET
-@Path("{a_id}/{s_id}")
-@Produces(MediaType.APPLICATION_JSON)
-public JSONObject GetSpecificEnrollment(@PathParam("a_id") int a_id ,@PathParam("s_id") int s_id) {
-JSONObject jo=null;
-Enrollment obj= null;
-	try {
-		EnrollmentHome objSH = new EnrollmentHome();
-		obj = objSH.getSpecificEnrollment(a_id,s_id);
-		
-		if(obj!= null){
-			ObjectMapper mapper = new ObjectMapper();	
-			mapper.setSerializationInclusion(JsonSerialize.Inclusion.NON_NULL);
-			jo = new JSONObject(mapper.writeValueAsString(obj));
-		}
-	} catch (JSONException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	} catch (JsonGenerationException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	} catch (JsonMappingException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	} catch (IOException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
-	return jo;
-}
 }

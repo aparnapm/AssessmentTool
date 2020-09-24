@@ -1,0 +1,52 @@
+<div class="container" style="padding:5%!important">
+	<div id="parentregister" class="container" data-ng-init="getEmails()" data-ng-submit="registerParent(parentdetails)" style="padding-left:5%!important; padding-right=5%!important;">
+		<p class="h2" style="margin-bottom:20px!important;">Register as a Parent</p>
+		<div id="index_parentregister_errorMessage" data-ng-if="errorMessage" data-ng-model="errorMessage" style="color: red!important;">{{errorMessage}}</div>
+		<div id="index_parentregister_successMessage" data-ng-if="successMessage" data-ng-model="successMessage" style="color: green!important;">{{successMessage}}</div>
+		<form name="parent_login" id="parent_login_form">
+			<div class="form-group">
+				<label for="parent_firstname" style="font-size: 15px!important;">First Name</label>
+				<input name="parent_firstname" class="form-control" type="text" data-ng-model="parentdetails.firstName" required/>
+				<span data-ng-show="parent_login.parent_firstname.$touched && parent_login.parent_firstname.$invalid">First name is required.</span>
+			</div>
+			<div class="form-group">
+				<label for="parent_lastname" style="font-size: 15px!important;">Last Name</label>
+				<input name="parent_lastname" class="form-control" type="text" data-ng-model="parentdetails.lastName" required/>
+				<span data-ng-show="parent_login.parent_lastname.$touched && parent_login.parent_lastname.$invalid">Last name is required.</span>
+			</div>
+			<div class="form-group">
+				<label for="parent_email" style="font-size: 15px!important;">Email</label>
+				<input name="parent_email" class="form-control" type="email" data-ng-model="parentdetails.email" required/>
+				<span data-ng-show="parent_login.parent_email.$touched && parent_login.parent_email.$invalid">Enter a valid email.</span>
+			</div>
+			<div class="form-group">
+				<label for="parent_passw" style="font-size: 15px!important;">Password</label>
+				<input name="parent_passw" class="form-control" type="password" data-ng-model="parentdetails.passw" data-ng-pattern="/(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z])/" required/>
+				<span data-ng-show="!parent_login.parent_passw.$error.required &&  parent_login.parent_passw.$error.pattern && parent_login.parent_passw.$dirty">Must contain one lowercase letter; uppercase letter, and one non-alpha character (a number or a symbol.)</span>
+			</div>
+			<div class="form-group">
+				<label for="confirm_passw" style="font-size: 15px!important;">Confirm Password</label>
+				<input name="confirm_passw" class="form-control" type="password" data-ng-model="parentdetails.confirmpassw" data-ng-pattern="parentdetails.passw" required/>
+				<span data-ng-show="parentdetails.passw != parentdetails.confirmpassw">Your passwords must match.</span>
+			</div>
+			<div class="form-group">
+				<label for="parent_phone" style="font-size: 15px!important;">Phone</label>
+				<input name="parent_phone" class="form-control" type="text" data-ng-model="parentdetails.phone" data-ng-pattern="/^(\+91[\-\s]?)?[0]?(91)?[789]\d{9}$/"></input>
+				<span data-ng-show="parent_login.parent_phone.$touched && parent_login.parent_phone.$invalid">Phone number is not valid.</span>
+			</div>
+			<div class="form-group">
+				<label for="parent_location" style="font-size: 15px!important;">Location</label>
+				<input name="parent_location" class="form-control" type="text" data-ng-model="parentdetails.location"></input>
+			</div>
+			<div class="form-group">
+				<label for="parent_dob" style="font-size: 15px!important;">Date of Birth</label>
+				<input name="parent_dob" class="form-control" type="date" data-ng-model="parentdetails.dob"></input>
+			</div>
+			
+			<div align="center">
+				<button type="submit" class="btn btn-primary">Register</button>
+			</div>
+		</form>
+		<br></br>
+	</div>
+</div>

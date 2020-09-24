@@ -1,0 +1,80 @@
+<!-- Header -->
+<div class="modal-header">
+	<p id="modal-title" class="h2" style="margin-bottom:20px!important;">{{currentAssessment.assessmentName}}</p>
+	<a data-ng-click="quizAborted()">&times;</a>
+</div>
+
+<!-- Quiz duration body -->
+<div class="modal-body" align="center" id="student_quizmodal_quiz">
+	<p id="question" class="h4" style="margin-bottom:15px!important;">{{thisQuestion.ques}}</p>
+	<div class="container-fluid">
+		
+		<div class="row">
+			<div class="col-md-6">
+				<label id="opta" class="answerlabel">{{thisQuestion.opta}}
+					<input type="radio" data-ng-model="result" value="a"/>
+					<span class="radiobutton"></span>
+				</label>
+			</div>
+			<div class="col-md-6">
+				<label id="optb" class="answerlabel">{{thisQuestion.optb}}
+					<input type="radio" data-ng-model="result" value="b"/>
+					<span class="radiobutton"></span>
+				</label>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-md-6">
+				<label id="optc" class="answerlabel">{{thisQuestion.optc}}
+					<input type="radio" data-ng-model="result" value="c"/>
+					<span class="radiobutton"></span>
+				</label>
+			</div>
+			<div class="col-md-6">
+				<label id="optd" class="answerlabel">{{thisQuestion.optd}}
+					<input type="radio" data-ng-model="result" value="d"/>
+					<span class="radiobutton"></span>
+				</label>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-md-12">
+				<ul class="pagination justify-content-center">
+					<li class="page-item" data-ng-hide="question_index==0">
+						<a data-ng-click="changePage(result, pageNum-1)" class="page-link" aria-label="Previous">
+							<span aria-hidden="true">&laquo;</span>
+							<span class="sr-only">Previous</span>
+						</a>
+					</li>
+					<li class="page-item" data-ng-class='{active:isActivePage(currentQuestions.indexOf(x)+1)}' data-ng-repeat="x in currentQuestions"><a data-ng-click="changePage(result, currentQuestions.indexOf(x)+1)" class="page-link">{{currentQuestions.indexOf(x)+1}}</a></li>
+					<li class="page-item" data-ng-hide="question_index==currentAssessment.qcount-1">
+						<a data-ng-click="changePage(result, pageNum+1)" class="page-link" aria-label="Next">
+							<span aria-hidden="true">&raquo;</span>
+							<span class="sr-only">Next</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-md-12">
+				<div class="progress">
+					<div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="{{percent}}"><i>{{timeStr}}</i></div>
+				</div>
+			</div>
+		</div>
+	
+	</div>
+</div>
+
+<!-- Footer (contains: timer and question count -->
+<div class="modal-footer" align="center">
+	<div class="row">
+		<div class="col-md-12">
+			<button class="btn btn-success btn-block" data-ng-show="question_index == currentAssessment.qcount-1" data-ng-click="submitAssessment(result)">Submit</button>
+		</div>
+	</div>
+</div>

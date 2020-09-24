@@ -1,0 +1,70 @@
+<div class="container" style="padding:5%!important;">
+	<div id="admin_assessmentcreate_createForm" data-ng-submit="addAssessment(newassessment)" style="padding-left:5%!important; padding-right:5%!important;">
+		<p class="h2" style="margin-bottom:20px!important;">Create Assessment</p>
+		<div id="admin_assessmentcreate_errorMessage" data-ng-if="errorMessage" data-ng-model="errorMessage" style="color: red!important;">{{errorMessage}}</div>
+		<form name="assessment_create" id="assessment_create_form">
+			<div class="form-group">
+				<label for="assessment_name" style="font-size: 15px!important;">Name</label>
+				<input name="assessment_name" class="form-control" type="text" data-ng-model="newassessment.assessmentName" required/>
+				<span data-ng-show="assessment_create.assessment_name.$touched && assessment_create.assessment_name.$invalid">Assessment must have a name.</span>
+			</div>
+			<div class="form-group">
+				<label for="assessment_desc" style="font-size: 15px!important;">Description</label>
+				<br>
+				<textarea class="form-control rounded-0" name="assessment_desc" rows="3" data-ng-model="newassessment.description" required></textarea>
+			</div>
+			<div class="form-group row">
+				<label class="control-label col-sm-2" style="font-size: 15px!important;" for="assessment_category">Category</label>
+				<div class="col-sm-10">
+					<select name="assessment_category" class="form-control" data-ng-model="newassessment.category">
+						<option value="mix">Mix</option>
+	      				<option value="EQ">EQ</option>
+	      				<option value="IQ">IQ</option>
+	   			 	</select>
+				</div>			
+			</div>
+			<div class="form-group row">
+				<label class="control-label col-sm-2" style="font-size: 15px!important;" for="assessment_difficulty">Difficulty</label>
+				<div class="col-sm-10">
+					<select name="assessment_difficulty" class="form-control" data-ng-model="newassessment.difficulty">
+						<option value="mix">Mix</option>
+	      				<option value="easy">easy</option>
+	      				<option value="medium">medium</option>
+	      				<option value="hard">hard</option>
+	   			 	</select>
+				</div>			
+			</div>
+			<div class="form-group row">
+				<label class="control-label col-sm-2" style="font-size: 15px!important;" for="assessment_qcount">No. of Questions</label>
+				<div class="col-sm-10">
+					<input name="assessment_qcount" class="form-control" type="number" data-ng-model="newassessment.qcount"/>
+					<span data-ng-show="newassessment.qcount<=0">Number of questions must be greater than 0.</span>
+				</div>
+			</div>
+			<div class="form-group row">
+				<label class="control-label col-sm-2" style="font-size: 15px!important;" for="assessment_attempts">Attempts</label>
+				<div class="col-sm-10">
+					<input name="assessment_attempts" class="form-control" type="number" data-ng-model="newassessment.attempts"/>
+					<span data-ng-show="newassessment.attempts<=0">Number of attempts must be greater than 0.</span>
+				</div>
+			</div>
+			<div class="form-group row">
+				<label class="control-label col-sm-1" style="font-size: 15px!important;" for="assessment_hours">Hours</label>
+				<div class="col-sm-3">
+					<input name="assessment_hours" class="form-control" type="number" min="0" data-ng-model="newassessment.timeHours"/>
+				</div>
+				<label class="control-label col-sm-1" style="font-size: 15px!important;" for="assessment_minutes">Minutes</label>
+				<div class="col-sm-3">
+					<input name="assessment_minutes" class="form-control" type="number" min="0" data-ng-model="newassessment.timeMinutes"/>
+				</div>
+				<label class="control-label col-sm-1" style="font-size: 15px!important;" for="assessment_seconds">Seconds</label>
+				<div class="col-sm-3">
+					<input name="assessment_seconds" class="form-control" type="number" min="0" data-ng-model="newassessment.timeSeconds"/>
+				</div>
+			</div>						
+			<div align="center" class="container">
+				<button id="create_assessment_submitbtn" type="submit" class="btn btn-primary">Create</button>
+			</div>
+		</form>
+	</div>
+</div>

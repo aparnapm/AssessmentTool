@@ -1,0 +1,17 @@
+<div class="container" style="padding:5%!important">
+	<div id="adminlogin" class="container" data-ng-init="getLogin('admin')" data-ng-submit="adminLogin(admindetails)" style="padding-left:10%!important; padding-right:10%!important;">
+		<p class="h2" style="margin-bottom:20px!important;">Login to Admin Portal</p>
+		<div id="index_adminlogin_errorMessage" data-ng-if="errorMessage" data-ng-model="errorMessage" style="color: red!important;">{{errorMessage}}</div>
+		<form id="adminUser_login">
+			<div class="form-group">
+				<label for="admin_email" style="font-size: 15px!important;">Email</label> 
+				<input id="admin_email" class="form-control" type="email" data-ng-model="admindetails.email" required></input>
+			</div>
+			<div class="form-group">
+				<label for="admin_passw" style="font-size: 15px!important;">Password</label> 
+				<input id="admin_passw" class="form-control" type="password" data-ng-model="admindetails.passw" required></input>
+			</div>
+			<button type="submit" class="btn btn-primary">Login</button>
+		</form>
+	</div>
+</div>

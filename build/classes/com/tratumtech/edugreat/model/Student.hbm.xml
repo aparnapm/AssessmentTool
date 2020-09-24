@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated Jul 3, 2018 4:20:33 PM by  Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="edugreat" dynamic-insert="false" dynamic-update="false" mutable="true" name="com.tratumtech.edugreat.model.Student" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="student">
+        <id name="id" type="int">
+            <column name="id"/>
+            <generator class="increment"/>
+        </id>
+        <many-to-one name="parent"  lazy="false" class="com.tratumtech.edugreat.model.Parent"
+            column="p_id" not-null="true"/>
+        <property generated="never" lazy="false" name="firstName" optimistic-lock="true" type="string" unique="false">
+            <column length="20" name="first_name" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="lastName" optimistic-lock="true" type="string" unique="false">
+            <column length="30" name="last_name" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="email" optimistic-lock="true" type="string" unique="false">
+            <column length="30" name="email" not-null="true" unique="true"/>
+        </property>
+        <property generated="never" lazy="false" name="phone" optimistic-lock="true" type="string" unique="false">
+            <column length="20" name="phone" not-null="true" unique="true"/>
+        </property>
+        <property generated="never" lazy="false" name="institution" optimistic-lock="true" type="string" unique="false">
+            <column length="30" name="institution"/>
+        </property>
+        <property generated="never" lazy="false" name="standard" optimistic-lock="true" type="java.lang.Integer" unique="false">
+            <column name="standard"/>
+        </property>
+        <property generated="never" lazy="false" name="location" optimistic-lock="true" type="string" unique="false">
+            <column length="20" name="location"/>
+        </property>
+        <property generated="never" lazy="false" name="dob" optimistic-lock="true" type="date" unique="false">
+            <column length="10" name="dob"/>
+        </property>
+        <property generated="never" lazy="false" name="registeredDate" optimistic-lock="true" type="date" unique="false">
+            <column length="10" name="registeredDate"/>
+        </property>
+        <set name="enrollments" table="enrollment" fetch="select" cascade="all">
+			<key>
+				<column name="student_id" not-null="true"></column>
+			</key>
+			<one-to-many class="com.tratumtech.edugreat.model.Enrollment" />
+		</set>
+    </class>
+</hibernate-mapping>
